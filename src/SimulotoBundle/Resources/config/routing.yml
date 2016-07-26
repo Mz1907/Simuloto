@@ -1,0 +1,3 @@
+simuloto_homepage:
+    path:     /
+    defaults: { _controller: SimulotoBundle:Default:index }
