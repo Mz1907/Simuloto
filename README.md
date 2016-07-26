@@ -1,4 +1,4 @@
-<<<<<<< 301f8b3c62791cff554123faf113f39a0618e793
+First commit
 # Simuloto
 My first Symfony project: A lottery simulator
 =======
