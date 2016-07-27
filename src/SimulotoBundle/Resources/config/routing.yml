@@ -1,3 +1,11 @@
 simuloto_homepage:
     path:     /
     defaults: { _controller: SimulotoBundle:Default:index }
+
+result:
+    path:     /result
+    defaults: { _controller: SimulotoBundle:Lotto:result }
+
+build_score:
+    path:     /buildScore
+    defaults: { _controller: SimulotoBundle:Lotto:buildScore }
