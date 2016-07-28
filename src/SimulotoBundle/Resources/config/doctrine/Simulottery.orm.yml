@@ -1,0 +1,31 @@
+SimulotoBundle\Entity\Simulottery:
+    type: entity
+    table: null
+    repositoryClass: SimulotoBundle\Repository\SimulotteryRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        minNb:
+            type: smallint
+        maxNb:
+            type: smallint
+        countNb:
+            type: smallint
+        countDraw:
+            type: integer
+        draw:
+            type: array
+        uNumbers:
+            type: array
+        goodBalls:
+            type: array
+        score:
+            type: array
+    lifecycleCallbacks: {  }

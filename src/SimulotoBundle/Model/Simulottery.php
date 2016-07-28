@@ -2,144 +2,56 @@
 
 namespace SimulotoBundle\Model;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
- * @ORM\MappedSuperclass
- *
+ * Simulottery
  */
-abstract class Simulottery
+class Simulottery
 {
-
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
-    protected $name;
+    private $name;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="minNb", type="smallint")
      */
-    protected $minNb;
+    private $minNb;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="maxNb", type="smallint")
      */
-    protected $maxNb;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="draw", type="array")
-     */
-    protected $draw;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="uNumbers", type="array")
-     */
-    protected $uNumbers;
+    private $maxNb;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="drawCount", type="integer")
      */
-    protected $drawCount;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="country", type="string", length=255)
-     */
-    protected $country;
+    private $countDraw;
 
     /**
      * @var array
-     *
-     * @ORM\Column(name="result", type="json_array")
      */
-    protected $result;
+    private $draw;
 
     /**
-     * Good Balls count how many good balls fro a draw a uNumbers has found
-     * 
-     * @param array $draw
-     * @param array $uNumbers 
-     * 
-     * @return array
+     * @var array
      */
-    public function goodBalls(array $uNumbers, array $draw)
-    {
-        $arrGoodBalls = [
-            "countGoodBalls" => 0, // show many good balls
-            "goodBallsList" => [] // list of the balls matched by uNumbers
-        ];
-
-        foreach ($uNumbers as $uNb)
-        {
-            if ($this->isBallPresent($uNb, $draw) === true)
-            {
-                $arrGoodBalls["countGoodBalls"] += 1;
-
-                array_push($arrGoodBalls["goodBallsList"], $uNb);
-            }
-        }
-
-        return $arrGoodBalls;
-    }
+    private $uNumbers;
 
     /**
-     * Is ball present check if a ball is present into an array of balls
-     * @param integer $ball
-     * @param array $balls
-     * 
-     * @return boolean
+     * @var array
      */
-    public function isBallPresent($ball, array $balls)
-    {
-        return in_array(intval($ball), $balls);
-    }
+    private $goodBalls;
 
     /**
-     * Check Balls Check if there is 2 balls (or more) having the same value (this isn't allowed in the app)
-     * @param array $arrBalls
-     * 
-     * @return boolean
+     * @var array
      */
-    public function checkBalls(array $arrBalls)
-    {
-        $arrTemp = [];
+    private $score;
 
-        foreach ($arrBalls as $ball)
-        {
-            if(in_array($ball, $arrTemp))
-            {
-                return false;
-            } 
-            else
-            {
-                $arrTemp[] = $ball;
-            }
-        }
-        
-        return true;
-    }
 
     /**
      * Get id
@@ -224,13 +136,37 @@ abstract class Simulottery
     }
 
     /**
+     * Set countDraw
+     *
+     * @param integer $countDraw
+     *
+     * @return Simulottery
+     */
+    public function setCountDraw($countDraw)
+    {
+        $this->countDraw = $countDraw;
+
+        return $this;
+    }
+
+    /**
+     * Get countDraw
+     *
+     * @return int
+     */
+    public function getCountDraw()
+    {
+        return $this->countDraw;
+    }
+
+    /**
      * Set draw
      *
      * @param array $draw
      *
      * @return Simulottery
      */
-    public function setDraw($draw)
+    public function setDraw(array $draw)
     {
         $this->draw = $draw;
 
@@ -254,7 +190,7 @@ abstract class Simulottery
      *
      * @return Simulottery
      */
-    public function setUNumbers($uNumbers)
+    public function setUNumbers(array $uNumbers)
     {
         $this->uNumbers = $uNumbers;
 
@@ -272,75 +208,51 @@ abstract class Simulottery
     }
 
     /**
-     * Set drawCount
+     * Set goodBalls
      *
-     * @param integer $drawCount
+     * @param array $goodBalls
      *
      * @return Simulottery
      */
-    public function setDrawCount($drawCount)
+    public function setGoodBalls($goodBalls)
     {
-        $this->drawCount = $drawCount;
+        $this->goodBalls = $goodBalls;
 
         return $this;
     }
 
     /**
-     * Get drawCount
-     *
-     * @return int
-     */
-    public function getDrawCount()
-    {
-        return $this->drawCount;
-    }
-
-    /**
-     * Set country
-     *
-     * @param string $country
-     *
-     * @return Simulottery
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    /**
-     * Get country
-     *
-     * @return string
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * Set result
-     *
-     * @param array $result
-     *
-     * @return Simulottery
-     */
-    public function setResult($result)
-    {
-        $this->result = $result;
-
-        return $this;
-    }
-
-    /**
-     * Get result
+     * Get goodBalls
      *
      * @return array
      */
-    public function getResult()
+    public function getGoodBalls()
     {
-        return $this->result;
+        return $this->goodBalls;
     }
 
+    /**
+     * Set score
+     *
+     * @param array $score
+     *
+     * @return Simulottery
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
+
+        return $this;
+    }
+
+    /**
+     * Get score
+     *
+     * @return array
+     */
+    public function getScore()
+    {
+        return $this->score;
+    }
 }
+

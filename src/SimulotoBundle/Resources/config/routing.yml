@@ -9,3 +9,7 @@ result:
 build_score:
     path:     /buildScore
     defaults: { _controller: SimulotoBundle:Lotto:buildScore }
+    
+play_lotto_game:
+    path:     /playGame
+    defaults: { _controller: SimulotoBundle:Lotto:play}

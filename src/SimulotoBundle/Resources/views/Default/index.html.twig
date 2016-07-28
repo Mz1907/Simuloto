@@ -1,1 +1,37 @@
-Hello World!
+{% extends "::base.html.twig" %}
+
+{% block title %}SimulotoBundle:Default:Index{% endblock %}
+
+{% block body %}
+<h1>Welcome to the index page</h1>
+    <script>
+        function aButtonPressed() {
+            $.post('{{path('play_lotto_game')}}',
+                    {uNumbers: [1, 2, 3, 4, 5, 6], countGames: 100},
+                    function (response) {
+                        if (response.code == 100 && response.success) {
+                            
+                            window.console.log(response);  
+                            var arrScore = response.score;
+                            
+                            $.each(arrScore, function(k, v){
+                                 
+                                 $("#afficheScore").append("Boule n°" + k + ": " + v + "<br />");
+                            })                           
+                        }
+
+                    }, "json");
+        }
+
+        $(document).ready(function () {
+            $('button').on('click', function () {
+                aButtonPressed();
+            });
+        });
+    </script>
+    
+    <button>Click me</button>
+    
+    <div id="afficheScore"></div>
+    
+{% endblock %}

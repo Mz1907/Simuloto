@@ -1,5 +1,7 @@
 <?php
 
+
+
 //function isBallPresent($ball, array $balls)
 //{
 //    return in_array(intval($ball), $balls);
@@ -91,6 +93,57 @@
 //
 //draw();
 
+//function result(array $draw, array $goodBalls)
+//{
+//    return in_array(end($draw), $goodBalls["goodBallsList"]);
+//}
+//
+//echo "result = " . ((result([1, 2], ["goodBallsList" => [4, 2]])) === true) . "<br>";
+//
+//echo "result = " . ((result([1, 2], ["goodBallsList" => [4, 1]])) === false) . "<br>";
+//
+//echo "result = " . ((result([1, 2], ["goodBallsList" => [4, "a"]])) === false) . "<br>";
+//
+//echo "result = " . ((result([1, "a"], ["goodBallsList" => [4, 1]])) === false) . "<br>";
 
-
-
+//function buildScoreAction($goodBalls = ["countGoodBalls" => 3], $hasComp = false)
+//    {
+//
+//        $score = [
+//            "1" => 0,
+//            "2" => 0,
+//            "3" => 0,
+//            "4" => 0,
+//            "5" => 0,
+//            "6" => 0,
+//            "7" => 0,
+//            "8" => 0
+//        ];
+//
+//        if ($hasComp === false)
+//        { echo "coucou";
+//            switch ($goodBalls["countGoodBalls"])
+//            {
+//                case 6: $score["1"]++; break;
+//                case 5: $score["3"]++; break;
+//                case 4: $score["5"]++; break;
+//                case 3: $score["7"]++; break;
+//            }
+//        } elseif ($hasComp)
+//        { echo "hello";
+//            switch ($goodBalls["countGoodBalls"])
+//            {
+//                case 5: $score["2"] ++; break;
+//                case 4: $score["4"] ++; break;
+//                case 3: $score["6"] ++; break;
+//                case 2: $score["8"] ++; break;
+//            }
+//        }
+//        
+//        return $score;
+//    }
+//
+//    
+//    $a = buildScoreAction();
+//    
+//    var_dump($a);

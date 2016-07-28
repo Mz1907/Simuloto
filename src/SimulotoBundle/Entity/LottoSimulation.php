@@ -14,7 +14,11 @@ use SimulotoBundle\Util\ISimulottery;
  */
 class LottoSimulation extends Simulottery implements ISimulottery
 {
-
+    
+    protected $hasComp;
+    
+    
+    
     /**
      * Construct
      * 
@@ -23,27 +27,48 @@ class LottoSimulation extends Simulottery implements ISimulottery
      */
     public function __construct()
     {
-        $this->minNb = 1;
-        $this->maxNb = 45;
+        $this->setName("Lotto");
+        
+        $this->setMinNb(1);
+        
+        $this->setMaxNb(45);
+        
+        $this->setCountDraw(7);
+        
+        $this->setScore([
+            "1" => 0,
+            "2" => 0,
+            "3" => 0,
+            "4" => 0,
+            "5" => 0,
+            "6" => 0,
+            "7" => 0,
+            "8" => 0
+        ]);
+    }
+    
+        /**
+     * Set uNumbers
+     *
+     * @param boolean $hasComp
+     *
+     * @return Simulottery
+     */
+    public function setHasComp($hasComp)
+    {
+        $this->hasComp = $hasComp;
+
+        return $this;
     }
 
     /**
-     * draw() build a Lotto draw between minNb and maxNb
-     * 
-     * @return array
+     * Get hasComp
+     *
+     * @return boolean
      */
-    public function draw()
+    public function getHasComp()
     {
-        $drawTemp = [];
-
-        do
-        {
-            $tempNb = mt_rand($this->minNb, $this->maxNb);
-            if (!in_array($tempNb, $drawTemp))
-            {
-                $drawTemp[] = $tempNb;
-            }
-        } while (count($drawTemp) < 6);
+        return $this->hasComp;
     }
 
 }
