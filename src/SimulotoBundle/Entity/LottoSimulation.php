@@ -8,7 +8,7 @@ use SimulotoBundle\Util\ISimulottery;
 
 /**
  * LottoSimulation
- *
+ *  
  * @ORM\Table(name="lotto_simulation")
  * @ORM\Entity(repositoryClass="SimulotoBundle\Repository\LottoSimulationRepository")
  */

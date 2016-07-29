@@ -1,33 +1,14 @@
 {% extends "::base.html.twig" %}
-
 {% block title %}SimulotoBundle:Lotto:lotto{% endblock %}
+
+
 
 {% block body %}
 <h1>Welcome to the Lotto:result page</h1>
-{{dump(lt)}}
-    <script>
-        function aButtonPressed() {
-            var url = 
-            $.post('{{path('play_lotto_game')}}',
-                    {uNumbers: [1, 2, 3, 4, 5, 6], countGames: 10},
-                    function (response) {
-                        if (response.code == 100 && response.success) {//dummy check
-                            window.console.log(response);
-{#                            var arrDraw = response.result;
-                            window.console.log($(arrDraw));
-                            $.each(arrDraw, function(k, v){
-                                 $("#result").append(v);
-                            })#}                           
-                        }
-
-                    }, "json");
-        }
-
-        $(document).ready(function () {
-            $('button').on('click', function () {
-                aButtonPressed();
-            });
-        });
-    </script>
-    <button>Click me</button>
+{{form(form)}}               
+        {% block javascripts %}
+            {%  javascripts 'bundles/simuloto/js/simulotto.js' %}
+                 <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
 {% endblock %}

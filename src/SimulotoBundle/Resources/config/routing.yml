@@ -11,5 +11,5 @@ build_score:
     defaults: { _controller: SimulotoBundle:Lotto:buildScore }
     
 play_lotto_game:
-    path:     /playGame
-    defaults: { _controller: SimulotoBundle:Lotto:play}
+    path:     /playLotto
+    defaults: { _controller: SimulotoBundle:FormBuilder:LottoSimulationForm}

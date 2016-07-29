@@ -2,8 +2,14 @@
 
 namespace SimulotoBundle\Model;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Simulottery
+ * 
+ * @OneToMany(targetEntity="LottoSimulation", mappedBy="Simulottery")
+ * 
+ * @ORM\Entity
  */
 class Simulottery
 {
