@@ -11,6 +11,7 @@ namespace SimulotoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use SimulotoBundle\Entity\LottoSimulation;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
@@ -28,7 +29,7 @@ class FormBuilderController extends Controller
         $data = [];
 
         $formBuilder = $this->createFormBuilder($data);
-        
+
         /** building Lotto grid with checkboxes * */
         for ($i = 1; $i <= $lt->getMaxNb(); $i++)
         {
@@ -36,22 +37,38 @@ class FormBuilderController extends Controller
                 'label' => $i,
                 'required' => false,
                 'attr' => [
-                    'class' => 'ballsCheckBox'
+                    'class' => 'ballsCheckBox',
+                    'data-toggle' => 'toggle',
+                    'data-style' => 'ios',
+                    'value' => $i
                 ]
             ]);
         }
-        
-        /** adding submit button **/
+
+        $formBuilder->add('Tirage', ChoiceType::class, [
+            'choices' => [
+                '1' => 1,
+                '10' => 10,
+                '100' => 100,
+                '1000' => 1000,
+            ],
+            'attr' => [
+                'class' => 'selectTirage'
+            ]
+        ]);
+
+        /** adding submit button * */
         $formBuilder->add('Envoyer', SubmitType::class, [
             'attr' => [
                 'class' => 'save'
-                ]
-            ]);
-        
+            ]
+        ]);
+
         $form = $formBuilder->getForm();
 
         return $this->render("SimulotoBundle:Lotto:lotto.html.twig", [
-            "form" => $form->createview()
-                ]);
+                    "form" => $form->createview()
+        ]);
     }
+
 }

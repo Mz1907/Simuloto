@@ -3,26 +3,36 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        
+
         {% block stylesheets %}
             {% stylesheets 'bundles/simuloto/css/bootstrap.css' filter='cssrewrite'  %}
-                <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
             {% endstylesheets %}
-        {% endblock %}        
+        {% endblock %}    
+
+        {% block stylesheetsSimulottery %}
+        {% endblock %}
+
         {% block jquery %}
             {%  javascripts 'bundles/simuloto/js/jquery.js' %}
-                 <script src="{{ asset_url }}"></script>
+            <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
         {% endblock %}
-        
+
+        {% block javascriptsSimulottery %}
+        {% endblock %}
+
+        {% block javascripts %}
+            {%  javascripts 'bundles/simuloto/js/bootstrap.js' %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}
-            {%  javascripts 'bundles/simuloto/js/bootstrap.js' %}
-                 <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-        {% endblock %}
-    </body>
+    {% block body %}{% endblock %}
+
+
+</body>
 </html>
