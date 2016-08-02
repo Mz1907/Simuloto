@@ -1,0 +1,1 @@
+fos.Router.setData({"base_url":"","routes":{"execute_lotto_simulation":{"tokens":[["text","\/executeLotto"]],"defaults":[],"requirements":[],"hosttokens":[]}},"prefix":"","host":"localhost","scheme":"http"});

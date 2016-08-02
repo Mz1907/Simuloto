@@ -6,8 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+
+    public function showAboutAction()
     {
-        return $this->render('SimulotoBundle:Default:index.html.twig');
+        return $this->render('SimulotoBundle:default:about.html.twig');
     }
+
 }

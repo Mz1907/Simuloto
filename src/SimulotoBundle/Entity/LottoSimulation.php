@@ -5,6 +5,8 @@ namespace SimulotoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use SimulotoBundle\Model\Simulottery;
 use SimulotoBundle\Util\ISimulottery;
+use Symfony\Component\Config\Tests\Util\Validator as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * LottoSimulation
@@ -14,11 +16,9 @@ use SimulotoBundle\Util\ISimulottery;
  */
 class LottoSimulation extends Simulottery implements ISimulottery
 {
-    
+
     protected $hasComp;
-    
-    
-    
+
     /**
      * Construct
      * 
@@ -28,13 +28,13 @@ class LottoSimulation extends Simulottery implements ISimulottery
     public function __construct()
     {
         $this->setName("Lotto");
-        
+
         $this->setMinNb(1);
-        
+
         $this->setMaxNb(45);
-        
+
         $this->setCountDraw(7);
-        
+
         $this->setScore([
             "1" => 0,
             "2" => 0,
@@ -46,8 +46,8 @@ class LottoSimulation extends Simulottery implements ISimulottery
             "8" => 0
         ]);
     }
-    
-        /**
+
+    /**
      * Set uNumbers
      *
      * @param boolean $hasComp

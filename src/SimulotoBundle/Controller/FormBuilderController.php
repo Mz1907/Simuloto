@@ -45,7 +45,7 @@ class FormBuilderController extends Controller
             ]);
         }
 
-        $formBuilder->add('Tirage', ChoiceType::class, [
+        $formBuilder->add('Nombre_de_tirages', ChoiceType::class, [
             'choices' => [
                 '1' => 1,
                 '10' => 10,
@@ -53,20 +53,20 @@ class FormBuilderController extends Controller
                 '1000' => 1000,
             ],
             'attr' => [
-                'class' => 'selectTirage'
+                'class' => 'countGames input-sm input-small',
             ]
         ]);
 
         /** adding submit button * */
-        $formBuilder->add('Envoyer', SubmitType::class, [
+        $formBuilder->add('Simuler', SubmitType::class, [
             'attr' => [
-                'class' => 'save'
+                'class' => 'save btn btn-success'
             ]
         ]);
 
         $form = $formBuilder->getForm();
 
-        return $this->render("SimulotoBundle:Lotto:lotto.html.twig", [
+        return $this->render("SimulotoBundle:Lotto:content.html.twig", [
                     "form" => $form->createview()
         ]);
     }

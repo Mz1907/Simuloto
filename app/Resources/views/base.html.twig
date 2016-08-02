@@ -1,38 +1,17 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+<html lang="fr">
+    
+{% include ':default:head.html.twig' %}
 
-        {% block stylesheets %}
-            {% stylesheets 'bundles/simuloto/css/bootstrap.css' filter='cssrewrite'  %}
-            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-            {% endstylesheets %}
-        {% endblock %}    
+<body>
+    
+    {% include ':default:navigation.html.twig ' %}
 
-        {% block stylesheetsSimulottery %}
-        {% endblock %}
-
-        {% block jquery %}
-            {%  javascripts 'bundles/simuloto/js/jquery.js' %}
-            <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-        {% endblock %}
-
-        {% block javascriptsSimulottery %}
-        {% endblock %}
-
-        {% block javascripts %}
-            {%  javascripts 'bundles/simuloto/js/bootstrap.js' %}
-            <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-        {% endblock %}
-
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-    {% block body %}{% endblock %}
-
+    {% block content %}{% endblock content %}
+    
+    {% include ':default:footer.html.twig' %}
 
 </body>
 </html>
+        
+

@@ -1,15 +1,22 @@
 simuloto_homepage:
     path:     /
-    defaults: { _controller: SimulotoBundle:Default:index }
+    defaults: { _controller: SimulotoBundle:Default:showAbout }
 
-result:
-    path:     /result
-    defaults: { _controller: SimulotoBundle:Lotto:result }
-
-build_score:
-    path:     /buildScore
-    defaults: { _controller: SimulotoBundle:Lotto:buildScore }
-    
+#LottoSimulation routes
 play_lotto_game:
     path:     /playLotto
     defaults: { _controller: SimulotoBundle:FormBuilder:LottoSimulationForm}
+        
+execute_lotto_simulation:
+    path:     /executeLotto
+    defaults: { _controller: SimulotoBundle:Lotto:mainPlay}
+    options:
+        expose: true
+        
+about:
+    path: /about
+    defaults: { _controller: SimulotoBundle:Default:showAbout}
+
+    
+        
+

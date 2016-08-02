@@ -1,0 +1,23 @@
+<!-- Bootstrap Core CSS -->
+{% stylesheets '@bootstrap_css' %}
+<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+{% endstylesheets %}
+
+{% javascripts '@jquery' '@bootstrap_js' %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{%  javascripts 'bundles/simuloto/js/lottoSimulation.js'
+                'bundles/simuloto/js/bootstrap-toggle.js' 'bundles/simuloto/js/router.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% stylesheets'bundles/simuloto/css/bootstrap-toggle.css' filter='cssrewrite'  %}
+<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+{% endstylesheets %}
+
+{% stylesheets 'bundles/simuloto/css/shop-item.css' filter='cssrewrite'  %}
+<link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+{% endstylesheets %}
+
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>

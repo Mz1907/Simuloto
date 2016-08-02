@@ -1,0 +1,18 @@
+{% if form is defined %}
+    {% form_theme form ':default:form_custom.html.twig' %}
+    {{ form_start(form) }}
+        {% for LottoItem in form.children %}
+            {% if loop.index == 7 or loop.index == 13 or loop.index == 19 or loop.index == 25
+                              or loop.index == 31 or loop.index == 37 or loop.index == 43
+                              and LottoItem.vars.id != 'form_Simuler' %}
+                <br />
+            {% endif %}
+            {% if loop.index is divisibleby(46) and LottoItem.vars.id != 'form_Simuler' %}
+                <br />
+                {{ form_label(LottoItem) }}
+            {% endif %}
+            {{form_row(LottoItem)}}
+        {% endfor %}
+    {{ form_end(form) }}
+{% endif %}
+

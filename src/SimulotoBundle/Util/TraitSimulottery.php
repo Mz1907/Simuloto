@@ -18,12 +18,12 @@ trait TraitSimulottery
 
         do
         {
-            $tempNb = mt_rand($minNb, $maxNb);
-            if (!in_array($tempNb, $draw))
+            $nb = mt_rand($minNb, $maxNb);
+            if (!in_array($nb, $draw))
             {
                 $i++;
                 
-                $draw[$i] = $tempNb;
+                $draw[$i] = $nb;
             }
         } while (count($draw) < $countNb);
         
@@ -41,7 +41,7 @@ trait TraitSimulottery
     public function goodBalls(array $uNumbers, array $draw)
     {
         $arrGoodBalls = [
-            "countGoodBalls" => 0, // show many good balls
+            "countGoodBalls" => 0, // show how many good balls
             "goodBallsList" => [] // list of the balls matched by uNumbers
         ];
 

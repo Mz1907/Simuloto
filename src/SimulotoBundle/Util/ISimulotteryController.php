@@ -10,8 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 Interface ISimulotteryController
 {
     /** main methode when user push "play" button **/
-    public function playAction();
-
+    public function mainPlayAction();
 
     public function buildScoreAction($loterrySimulationObject);
 }
