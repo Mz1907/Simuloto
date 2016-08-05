@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
+
+    <head>
+    {% embed ':default:head.html.twig' %}{% endembed %}
+
+    {# Euromillions simulation css and js #}
+    {% block euromillionsSimulationIncludes %}{% endblock %}
+    {# LottoSimulation #}
+    {% block lottoSimulationIncludes %}{% endblock %}
+    {# commun js and css files for all simulations modules #}
+    {% block communSimulationIncludes %}{% endblock %}
     
-{% include ':default:head.html.twig' %}
+    <title>{% block title %}{% endblock %}</title>
+
+    </head>
 
 <body>
-    
-    {% include ':default:navigation.html.twig ' %}
 
-    {% block content %}{% endblock content %}
-    
-    {% include ':default:footer.html.twig' %}
+{% embed ':default:navigation.html.twig ' %}{% endembed %}
+
+{% block content %}{% endblock content %}
+
+{% embed ':default:footer.html.twig' %}{% endembed %}
 
 </body>
 </html>
-        
+
 

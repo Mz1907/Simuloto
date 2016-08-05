@@ -5,10 +5,9 @@
  **/
 
 function sendUNumbers(uNumbers, uStars, countGames) {
-
+    
     /** creating ajax request **/
     var url = Routing.generate('execute_euromillions_simulation');
-
 
     $.post(
             url,
@@ -16,7 +15,7 @@ function sendUNumbers(uNumbers, uStars, countGames) {
             function (response) {
                 if (response.code == 100 && response.success) {
                     window.console.log(response);
-                    if(response.message == "none"){                        
+                    if (response.message == "none") {
                         var score = response.score;
                         var simulationDetails = response.arrSimulationDetails;
                         var countGames = response.countGames;
@@ -42,22 +41,21 @@ function sendUNumbers(uNumbers, uStars, countGames) {
                                 });
                             }
                         })
-                    }
-                    else{
+                    } else {
                         /** creating div alert error  **/
                         var $div = $("<div>");
                         $div.addClass('alert alert-danger customAlert').html('<strong>' + response.message + '<strong>');
                         /** add div alert error to the dom **/
                         $('#details').append($div);
-                        
+
                     }
                 }
 
             }, 'json');
 }
 
-/** 
- * disable all unchecked balls 
+/**
+ * disable all unchecked balls
  * this function is used when when selectedBalls.length >= 10
  * **/
 function disableUnchecked($allBalls) {
@@ -81,6 +79,14 @@ function enableDisabled($allBalls) {
     })
 }
 
+/**
+ *  build an html table representing euromillions score
+ *  and attach it to the dom !
+ *
+ *  @param jsonObject score
+ *
+ *  @return objectHTML <table>
+ */
 function buildHtmlTable(score) {
 
     var $table = $('<table>');
@@ -114,8 +120,8 @@ function buildHtmlTable(score) {
     return $table;
 }
 
-/** 
- * replace key of jsonObject var score key -> key  O = 6 good numbers, key 1 = 5+ good numbers , etc 
+/**
+ * replace key of jsonObject var score key -> key  O = 6 good numbers, key 1 = 5+ good numbers , etc
  * @param int key
  * @return string
  * **/
@@ -170,9 +176,9 @@ function replaceKey(key) {
 }
 
 /**
- *  build build an html table representing detailled simulation result 
+ *  build an html table representing detailled simulation result
  *  @param simulationDetails json object
- *  
+ *
  *  @return objectHTML <table>
  */
 function buildSimulationDetails(simulationDetails, countGames) {
@@ -224,14 +230,14 @@ function buildSimulationDetails(simulationDetails, countGames) {
         var uStarsToParse = arrUStars[i];
         var goodBallsToParse = arrCountGoodBalls[i];
         var goodStarsToParse = arrCountGoodStars[i];
-        
-        
+
+
         var s = ''; // the string to add into each <td>
         var drawLength = Object.keys(drawToParse).length;
 
         /** parse draw numbers **/
         $.each(drawToParse, function (k, v) {
-                s += v + ' - ';
+            s += v + ' - ';
         });
         // delete white space at the end
         s = s.trim();
@@ -239,10 +245,10 @@ function buildSimulationDetails(simulationDetails, countGames) {
         $td1.append(s);
         $tr.append($td1);
         s = '';
-        
+
         /** parse draw stars **/
         $.each(drawStarsToParse, function (k, v) {
-                s += v + ' - ';
+            s += v + ' - ';
         });
         // delete white space at the end
         s = s.trim();
@@ -262,8 +268,8 @@ function buildSimulationDetails(simulationDetails, countGames) {
         $td3.append(s);
         $tr.append($td3);
         s = '';
-        
-        
+
+
         /** parse uStars **/
         $.each(uStarsToParse, function (k, v) {
             s += v + ' - ';
@@ -274,8 +280,8 @@ function buildSimulationDetails(simulationDetails, countGames) {
         $td4.append(s);
         $tr.append($td4);
         s = '';
-        
-        
+
+
         /** parse goodBalls **/
         $.each(goodBallsToParse, function (k, v) {
             s += v + ' - ';
@@ -286,11 +292,11 @@ function buildSimulationDetails(simulationDetails, countGames) {
         $td5.append(s);
         $tr.append($td5);
         s = '';
-        
-        
+
+
         /** parse goodStars **/
         $.each(goodStarsToParse, function (k, v) {
-           s += v + ' - ';
+            s += v + ' - ';
         });
         // delete white aspace at the end
         s = s.trim();
@@ -305,7 +311,7 @@ function buildSimulationDetails(simulationDetails, countGames) {
     }
 
     $table.append($tbody);
-    
+
     /** add style to table **/
     $table.addClass("table table-striped");
     return $table;
@@ -371,8 +377,6 @@ function replaceStarsValue() {
 }
 
 $(function () {
-
-
     //replaceStarsValue();
     /** form submit prevent default (it uses ajax to send data) **/
     $('form').on({
@@ -399,30 +403,33 @@ $(function () {
 
     var countGames;
 
+    /** balls and stars config and style  **/
+//    $('.toggle-on').each(function (k, v) {
+//        k = convertStarsValue(k + 1);
+//        $(this).html(k);
+//
+//    })
+    
+    $(':checkbox').each(function (k, v) {
+        $(this).bootstrapToggle({
+            on: (k + 1),
+            off: (k + 1),
+            //onstyle: 'success',
+            //offstyle: 'danger',
+        })
+    })
 
     /** balls and stars config and style  **/
-    $('.toggle-on').each(function (k, v) {
-        k = convertStarsValue(k + 1);
-        $(this).html(k);
+//    $('.toggle-off').each(function (k, v) {
+//        k = convertStarsValue(k + 1);
+//        $(this).html(k);
 //        $(this).bootstrapToggle({
 //            on: (k + 1),
 //            off: (k + 1),
 //            onstyle: 'success',
 //            offstyle: 'danger',
 //        })
-    })
-
-    /** balls and stars config and style  **/
-    $('.toggle-off').each(function (k, v) {
-        k = convertStarsValue(k + 1);
-        $(this).html(k);
-//        $(this).bootstrapToggle({
-//            on: (k + 1),
-//            off: (k + 1),
-//            onstyle: 'success',
-//            offstyle: 'danger',
-//        })
-    })
+//   })
 
     $('.ios').css({
         "border-radius": '25px'
@@ -515,8 +522,6 @@ $(function () {
         })
     })
 
-
-
     /** add eventListener on button sumbit to send ajax **/
     $('#form_Simuler').on({
         click: function (e) {
@@ -531,7 +536,6 @@ $(function () {
                 /** retrives countGames before ajax process **/
                 countGames = $('#form_Nombre_de_tirages').val();
                 sendUNumbers(selectedBalls, selectedStars, countGames);
-
             }
         }
     })

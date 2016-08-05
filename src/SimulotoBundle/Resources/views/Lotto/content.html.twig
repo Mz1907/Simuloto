@@ -1,9 +1,22 @@
 {% extends '::base.html.twig' %}
 
-{% block lottoSimulationJs %}
-{%  javascripts 'bundles/simuloto/js/lottoSimulation.js' %}
+{% block title %}Simulation Lotto Belgique en ligne{% endblock %}
+
+{% block euromillionsSimulationIncludes %}
+
+    {% stylesheets'bundles/simuloto/css/bootstrap-toggle.css' 'bundles/simuloto/css/lotto_simulation_custom.css' filter='cssrewrite'  %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    
+    {# note: to use bootstrapToggle() function: euromillionsSimulation MUST be loaded before bootstrap-toggle.js  #}
+    {%  javascripts 'bundles/simuloto/js/lottoSimulation.js' %}
     <script src="{{ asset_url }}"></script>
-{% endjavascripts %}
+    {% endjavascripts %}
+    
+    {% block communSimulationIncludes %}
+        {% include ':simulation:common_files.html.twig' %}
+    {% endblock %}   
+    
 {% endblock %}
 
 {% block content %}

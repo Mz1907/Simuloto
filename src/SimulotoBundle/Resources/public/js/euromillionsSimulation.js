@@ -5,7 +5,7 @@
  **/
 
 function sendUNumbers(uNumbers, uStars, countGames) {
-
+    
     /** creating ajax request **/
     var url = Routing.generate('execute_euromillions_simulation');
 
@@ -377,7 +377,6 @@ function replaceStarsValue() {
 }
 
 $(function () {
-
     //replaceStarsValue();
     /** form submit prevent default (it uses ajax to send data) **/
     $('form').on({
@@ -405,28 +404,32 @@ $(function () {
     var countGames;
 
     /** balls and stars config and style  **/
-    $('.toggle-on').each(function (k, v) {
-        k = convertStarsValue(k + 1);
-        $(this).html(k);
-//        $(this).bootstrapToggle({
-//            on: (k + 1),
-//            off: (k + 1),
-//            onstyle: 'success',
-//            offstyle: 'danger',
-//        })
+//    $('.toggle-on').each(function (k, v) {
+//        k = convertStarsValue(k + 1);
+//        $(this).html(k);
+//
+//    })
+    
+    $(':checkbox').each(function (k, v) {
+        $(this).bootstrapToggle({
+            on: (k + 1),
+            off: (k + 1),
+            //onstyle: 'success',
+            //offstyle: 'danger',
+        })
     })
 
     /** balls and stars config and style  **/
-    $('.toggle-off').each(function (k, v) {
-        k = convertStarsValue(k + 1);
-        $(this).html(k);
+//    $('.toggle-off').each(function (k, v) {
+//        k = convertStarsValue(k + 1);
+//        $(this).html(k);
 //        $(this).bootstrapToggle({
 //            on: (k + 1),
 //            off: (k + 1),
 //            onstyle: 'success',
 //            offstyle: 'danger',
 //        })
-    })
+//   })
 
     $('.ios').css({
         "border-radius": '25px'
