@@ -35,7 +35,7 @@ class EuromillionsSimulationFormController extends Controller
             {
                 $class = 'starsCheckBox';
             }
-            
+
             $formBuilder->add($i, CheckboxType::class, [
                 'label' => $i,
                 'required' => false,

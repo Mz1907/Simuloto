@@ -82,9 +82,9 @@ function enableDisabled($allBalls) {
 /**
  *  build an html table representing euromillions score
  *  and attach it to the dom !
- *  
+ *
  *  @param jsonObject score
- *  
+ *
  *  @return objectHTML <table>
  */
 function buildHtmlTable(score) {
@@ -401,7 +401,7 @@ $(function () {
 
     var selectedBalls = []; // value of user's selected balls ex:[4, 17, 22, 29, 36, 45]
     var selectedStars = [];
-    
+
     var countGames;
 
     /** balls and stars config and style  **/
@@ -519,8 +519,6 @@ $(function () {
         })
     })
 
-
-
     /** add eventListener on button sumbit to send ajax **/
     $('#form_Simuler').on({
         click: function (e) {
@@ -535,7 +533,6 @@ $(function () {
                 /** retrives countGames before ajax process **/
                 countGames = $('#form_Nombre_de_tirages').val();
                 sendUNumbers(selectedBalls, selectedStars, countGames);
-
             }
         }
     })

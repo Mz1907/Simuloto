@@ -20,12 +20,12 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
 
     /**
      * Main method of an Euromillions simulation
-     * 
-     * @return JsonResponse for ajax request     * 
+     *
+     * @return JsonResponse for ajax request     *
      */
     public function mainPlayAction()
     {
-        //Retrieve $countGames and uNemrs value from Request Object ! 
+        //Retrieve $countGames and uNemrs value from Request Object !
         $request = Request::createFromGlobals();
 
         $uNumbers = $request->request->get('uNumbers');
@@ -36,7 +36,7 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
         $validation = $this->isContentValid(['r'], $uStars, $countGames);
 
         $isValid = $validation['isValide'];
-        
+
         $response = [
             'uNumbers' => $uNumbers,
             'uStars' => $uStars,
@@ -77,7 +77,7 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
                 $eur->setDraw($draw);
                 $eur->setDrawStars($drawStars);
 
-                $countUserGrids = count($uNumbers); // forcement 1
+                $countUserGrids = count($uNumbers);
 
                 $goodBalls = $this->goodBalls($uNumbers, $eur->getDraw());
                 $eur->setGoodBalls($goodBalls);
@@ -86,9 +86,9 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
                 $eur->setGoodStars($goodStars);
 
                 $score = $this->buildScoreAction($eur);
-                
+
                 $eur->setScore($score);
-                
+
                 array_push($arrSimulationDetails['draw'], $eur->getDraw());
                 array_push($arrSimulationDetails['drawStars'], $eur->getDrawStars());
                 array_push($arrSimulationDetails['uNumbers'], $eur->getUNumbers());
@@ -107,25 +107,23 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
                 'score' => $eur->getScore(),
                 'arrSimulationDetails' => $arrSimulationDetails,
             ];
-        }        
+        }
 
         return new JsonResponse($response);
     }
 
     /**
      * @param $eur Euromillionssimulation object
-     * 
+     *
      * @return array
      */
     public function buildScoreAction($eur)
     {
         $goodBalls = $eur->getGoodBalls();
         $goodBalls = $goodBalls['countGoodBalls'];
-        
+
         $goodStars = $eur->getGoodStars();
         $goodStars = $goodStars['countGoodBalls'];
-        
-
 
         $score = $eur->getScore();
 
@@ -179,10 +177,10 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
     }
 
     /**
-     * check if ajax data format is correct: $arrUNumbers must be an array into an array containing digits 
+     * check if ajax data format is correct: $arrUNumbers must be an array into an array containing digits
      * and each array must have a size between 6 and 10 [ [3, 15, 23, 27, 34, 45], [9, 14, 44, 23, 11, 30], ... ]
-     * and $countGames must be a digit 
-     * 
+     * and $countGames must be a digit
+     *
      * @return array
      * * */
     public function isContentValid(array $arrUNumbers, array $arrUStars, $countGames)
@@ -209,7 +207,7 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
 
         /**
          * exemple of $arrUNumbers
-         * 
+         *
          * [ [11, 33, 12, 31, 29, 44], [3, 19, 45, 38, 27, 10], etc . . . ]
          */
         if (is_array($arrUNumbers) && count($arrUNumbers) > 4 && count($arrUNumbers) <= 10)
@@ -249,7 +247,7 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
         }
         /**
          * exemple of $arrUStars
-         * 
+         *
          * [1, 2, 3, 4]
          */
         $sizeArrStars = count($arrUStars);
