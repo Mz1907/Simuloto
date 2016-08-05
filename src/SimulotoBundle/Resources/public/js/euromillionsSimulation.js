@@ -378,7 +378,6 @@ function replaceStarsValue() {
 
 $(function () {
 
-
     //replaceStarsValue();
     /** form submit prevent default (it uses ajax to send data) **/
     $('form').on({
@@ -402,9 +401,8 @@ $(function () {
 
     var selectedBalls = []; // value of user's selected balls ex:[4, 17, 22, 29, 36, 45]
     var selectedStars = [];
-
+    
     var countGames;
-
 
     /** balls and stars config and style  **/
     $('.toggle-on').each(function (k, v) {
