@@ -77,7 +77,8 @@ class LottoController extends Controller implements ISimulotteryController
                 'arrSimulationDetails' => $arrSimulatonDetails, 
                 'score' => $lt->getScore(),
                 'code' => 100,
-                'success' => true
+                'success' => true,
+                'validation' => $validation
             ];
         } else
         {
@@ -163,7 +164,7 @@ class LottoController extends Controller implements ISimulotteryController
 
         $validation = [
             'isValide' => false,
-            'message' => ''
+            'message' => 'none'
         ];
 
         $countGames = intval($countGames);
@@ -192,13 +193,13 @@ class LottoController extends Controller implements ISimulotteryController
                     {
                         if (!is_numeric($uNumbers[$i]))
                         {
-                            $validation['message'] = 'Error 3';
+                            $validation['message'] = 'Veuillez selectionner des chiffres. Error 3';
                             return $validation;
                         }
                     }
                 } else
                 {
-                    $validation['message'] = 'Error 2';
+                    $validation['message'] = 'Veuillez selectionner entre 6 et 10 chiffres. Error 2';
                     return $validation;
                 }
             }

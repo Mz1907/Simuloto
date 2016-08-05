@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-    <head>
-    {% embed ':default:head.html.twig' %}{% endembed %}
+<head>
+{% embed ':default:head.html.twig' %}{% endembed %}
 
     {# Euromillions simulation css and js #}
     {% block euromillionsSimulationIncludes %}{% endblock %}
     {# LottoSimulation #}
     {% block lottoSimulationIncludes %}{% endblock %}
-    {# commun js and css files for all simulations modules #}
-    {% block communSimulationIncludes %}{% endblock %}
-    
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
     <title>{% block title %}{% endblock %}</title>
 
-    </head>
+</head>
 
 <body>
 

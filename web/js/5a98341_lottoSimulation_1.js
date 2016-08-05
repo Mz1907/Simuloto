@@ -271,14 +271,11 @@ $(function () {
     var selectedBalls = []; // value of user's selected balls ex:[4, 17, 22, 29, 36, 45]
     var countGames;
 
-
     /** balls config and style  **/
     $(':checkbox').each(function (k, v) {
         $(this).bootstrapToggle({
             on: (k + 1),
-            off: (k + 1),
-            //onstyle: 'success',
-            //offstyle: 'danger',
+            off: (k + 1)
         })
     })
 
@@ -299,7 +296,9 @@ $(function () {
                     $(this).attr('checked', false);
                     selectedBalls.splice(selectedBalls.indexOf(ball), 1);
                     countBalls--;
-                    window.console.log(countBalls);
+                    
+                    window.console.log("selectedBalls.length = " + selectedBalls.length);
+
                     if (selectedBalls.length == 9) {
                         enableDisabled($allBalls);
                         $("#form_Simuler").removeAttr('disabled');
@@ -314,7 +313,9 @@ $(function () {
                     $(this).attr('checked', true);
                     selectedBalls.push(ball);
                     countBalls++;
-                    window.console.log(countBalls);
+                    
+                    window.console.log("selectedBalls.length = " + selectedBalls.length);
+
                     if(selectedBalls.length == 6){
                         $("#form_Simuler").removeAttr('disabled');
                     }

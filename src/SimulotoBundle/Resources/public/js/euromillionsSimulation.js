@@ -5,7 +5,7 @@
  **/
 
 function sendUNumbers(uNumbers, uStars, countGames) {
-    
+
     /** creating ajax request **/
     var url = Routing.generate('execute_euromillions_simulation');
 
@@ -15,7 +15,7 @@ function sendUNumbers(uNumbers, uStars, countGames) {
             function (response) {
                 if (response.code == 100 && response.success) {
                     window.console.log(response);
-                    if (response.message == "none") {
+                    if (response.validation.message == "none") {
                         var score = response.score;
                         var simulationDetails = response.arrSimulationDetails;
                         var countGames = response.countGames;
@@ -43,11 +43,14 @@ function sendUNumbers(uNumbers, uStars, countGames) {
                         })
                     } else {
                         /** creating div alert error  **/
-                        var $div = $("<div>");
-                        $div.addClass('alert alert-danger customAlert').html('<strong>' + response.message + '<strong>');
-                        /** add div alert error to the dom **/
-                        $('#details').append($div);
 
+                            if($('.customAlert')){
+                                $('.customAlert').remove();
+                            }
+                            var $div = $("<div>");
+                            $div.addClass('alert alert-danger customAlert').html('<strong>' + response.message + '<strong>');
+                            /** add div alert error to the dom **/
+                            $('#details').append($div);     
                     }
                 }
 
@@ -403,33 +406,14 @@ $(function () {
 
     var countGames;
 
-    /** balls and stars config and style  **/
-//    $('.toggle-on').each(function (k, v) {
-//        k = convertStarsValue(k + 1);
-//        $(this).html(k);
-//
-//    })
-    
+    /** balls config and style  **/
     $(':checkbox').each(function (k, v) {
+        k = convertStarsValue(k + 1);
         $(this).bootstrapToggle({
-            on: (k + 1),
-            off: (k + 1),
-            //onstyle: 'success',
-            //offstyle: 'danger',
+            on: (k),
+            off: (k)
         })
     })
-
-    /** balls and stars config and style  **/
-//    $('.toggle-off').each(function (k, v) {
-//        k = convertStarsValue(k + 1);
-//        $(this).html(k);
-//        $(this).bootstrapToggle({
-//            on: (k + 1),
-//            off: (k + 1),
-//            onstyle: 'success',
-//            offstyle: 'danger',
-//        })
-//   })
 
     $('.ios').css({
         "border-radius": '25px'

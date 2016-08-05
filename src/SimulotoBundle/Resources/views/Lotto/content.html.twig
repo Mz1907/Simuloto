@@ -4,19 +4,16 @@
 
 {% block euromillionsSimulationIncludes %}
 
-    {% stylesheets'bundles/simuloto/css/bootstrap-toggle.css' 'bundles/simuloto/css/lotto_simulation_custom.css' filter='cssrewrite'  %}
+    {% stylesheets 'bundles/simuloto/css/lotto_simulation_custom.css' 'bundles/simuloto/css/bootstrap-toggle.css'  filter='cssrewrite'  %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
-    
+
     {# note: to use bootstrapToggle() function: euromillionsSimulation MUST be loaded before bootstrap-toggle.js  #}
-    {%  javascripts 'bundles/simuloto/js/lottoSimulation.js' %}
+    {%  javascripts 'bundles/simuloto/js/lottoSimulation.js' 'bundles/simuloto/js/bootstrap-toggle.js' 
+                    'bundles/simuloto/js/router.js'%}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    
-    {% block communSimulationIncludes %}
-        {% include ':simulation:common_files.html.twig' %}
-    {% endblock %}   
-    
+
 {% endblock %}
 
 {% block content %}
@@ -45,8 +42,6 @@
                         <div id="score"></div>
                         <div id="scoreDetails"></div>
                         <div id="details"></div>
-
-                        <p>Some content</p>
                     </div>
                 </div>
 

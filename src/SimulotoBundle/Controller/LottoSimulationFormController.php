@@ -34,7 +34,9 @@ class LottoSimulationFormController extends Controller
                     'class' => 'ballsCheckBox',
                     'data-toggle' => 'toggle',
                     'data-style' => 'ios',
-                    'value' => $i,
+                    'data-onstyle' => 'warning',
+                    'data-offstyle' => 'danger',
+                    'value' => $i
                 ]
             ]);
         }

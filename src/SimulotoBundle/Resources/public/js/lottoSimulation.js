@@ -11,40 +11,53 @@ function sendUNumbers(uNumbers, countGames) {
 
     /** creating ajax request **/
     var url = Routing.generate('execute_lotto_simulation');
-    
+
 
     $.post(
             url,
             {uNumbers: uNumbers, countGames: countGames},
             function (response) {
                 if (response.code == 100 && response.success) {//dummy check
-                    //window.console.log(response);
-                    var score = response.score;
-                    var simulationDetails = response.arrSimulationDetails;
-                    var countGames = response.countGames;
+                    window.console.log(response);
+                    if (response.validation.message == "none") {
 
-                    /**  build HtmlTable score  **/
-                    var $htmlTable = buildHtmlTable(score);
+                        var score = response.score;
+                        var simulationDetails = response.arrSimulationDetails;
+                        var countGames = response.countGames;
 
-                    /** empty previous content  **/
-                    $('#score, #scoreDetails, #details').empty();
-                    $('#p_details').remove();
-                    
-                    $('#score').append($htmlTable);
+                        /**  build HtmlTable score  **/
+                        var $htmlTable = buildHtmlTable(score);
 
-                    /**  build Html Table details simulation   **/
-                    //TODO attach it to the dom: create <div> after div#score
-                    var $htmlTableDetails = buildSimulationDetails(simulationDetails, countGames);
-                    
-                    $('#scoreDetails').append('<button id="p_details" class="btn btn-primary">Afficher les tirages</button>');
-                    $('#p_details').on({
-                        click: function(){
-                            $('#details').slideToggle('normal', 'linear', function(){
-                                $(this).append($htmlTableDetails);
-                            });
+                        /** empty previous content  **/
+                        $('#score, #scoreDetails, #details').empty();
+                        $('#p_details').remove();
+
+                        $('#score').append($htmlTable);
+
+                        /**  build Html Table details simulation   **/
+                        //TODO attach it to the dom: create <div> after div#score
+                        var $htmlTableDetails = buildSimulationDetails(simulationDetails, countGames);
+
+                        $('#scoreDetails').append('<button id="p_details" class="btn btn-primary">Afficher les tirages</button>');
+                        $('#p_details').on({
+                            click: function () {
+                                $('#details').slideToggle('normal', 'linear', function () {
+                                    $(this).append($htmlTableDetails);
+                                });
+                            }
+                        })
+
+                    } else {
+                        /** creating div alert error  **/
+
+                        if ($('.customAlert')) {
+                            $('.customAlert').remove();
                         }
-                    })
-                            
+                        var $div = $("<div>");
+                        $div.addClass('alert alert-danger customAlert').html('<strong>' + response.message + '<strong>');
+                        /** add div alert error to the dom **/
+                        $('#details').append($div);
+                    }
                 }
 
             }, 'json');
@@ -114,7 +127,7 @@ function buildHtmlTable(score) {
         $tbody.append($tr);
         $table.append($tbody);
     })
-    
+
     /** add style to table **/
     $table.addClass("table table-striped");
     return $table;
@@ -244,7 +257,7 @@ function buildSimulationDetails(simulationDetails, countGames) {
     }
 
     $table.append($tbody);
-    
+
     /** add style to table **/
     $table.addClass("table table-striped");
     return $table;
@@ -271,14 +284,11 @@ $(function () {
     var selectedBalls = []; // value of user's selected balls ex:[4, 17, 22, 29, 36, 45]
     var countGames;
 
-
     /** balls config and style  **/
     $(':checkbox').each(function (k, v) {
         $(this).bootstrapToggle({
             on: (k + 1),
-            off: (k + 1),
-            //onstyle: 'success',
-            //offstyle: 'danger',
+            off: (k + 1)
         })
     })
 
@@ -299,13 +309,15 @@ $(function () {
                     $(this).attr('checked', false);
                     selectedBalls.splice(selectedBalls.indexOf(ball), 1);
                     countBalls--;
-                    window.console.log(countBalls);
+
+                    window.console.log("selectedBalls.length = " + selectedBalls.length);
+
                     if (selectedBalls.length == 9) {
                         enableDisabled($allBalls);
                         $("#form_Simuler").removeAttr('disabled');
                     }
-                    
-                    if(selectedBalls.length == 5){
+
+                    if (selectedBalls.length == 5) {
                         $("#form_Simuler").attr('disabled', true);
                     }
 
@@ -314,8 +326,10 @@ $(function () {
                     $(this).attr('checked', true);
                     selectedBalls.push(ball);
                     countBalls++;
-                    window.console.log(countBalls);
-                    if(selectedBalls.length == 6){
+
+                    window.console.log("selectedBalls.length = " + selectedBalls.length);
+
+                    if (selectedBalls.length == 6) {
                         $("#form_Simuler").removeAttr('disabled');
                     }
                     if (selectedBalls.length >= 10) {

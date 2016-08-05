@@ -30,10 +30,9 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
 
         $uNumbers = $request->request->get('uNumbers');
         $uStars = $request->request->get('uStars');
-
         $countGames = $request->request->get('countGames');
 
-        $validation = $this->isContentValid(['r'], $uStars, $countGames);
+        $validation = $this->isContentValid($uNumbers, $uStars, $countGames);
 
         $isValid = $validation['isValide'];
 
@@ -59,7 +58,8 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
                 'uNumbers' => [],
                 'uStars' => [],
                 'goodBalls' => [],
-                'goodStars' => []
+                'goodStars' => [],
+                'message' => $validation['message']
             ];
 
             //hydrate EuromillionsSimulation
