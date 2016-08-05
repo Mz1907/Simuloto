@@ -182,7 +182,7 @@ class LottoController extends Controller implements ISimulotteryController
          * 
          * [ [11, 33, 12, 31, 29, 44], [3, 19, 45, 38, 27, 10], etc . . . ]
          */
-        if (is_array($arrUNumbers) && count($arrUNumbers) > 0)
+        if (count($arrUNumbers) > 0)
         {
             foreach ($arrUNumbers as $uNumbers)
             {

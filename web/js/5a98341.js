@@ -18,7 +18,7 @@ function sendUNumbers(uNumbers, countGames) {
             {uNumbers: uNumbers, countGames: countGames},
             function (response) {
                 if (response.code == 100 && response.success) {//dummy check
-                    window.console.log(response);
+                    //window.console.log(response);
                     var score = response.score;
                     var simulationDetails = response.arrSimulationDetails;
                     var countGames = response.countGames;
@@ -166,8 +166,8 @@ function replaceKey(key) {
  *  @return objectHTML <table>
  */
 function buildSimulationDetails(simulationDetails, countGames) {
-    window.console.log();
-    window.console.log(simulationDetails);
+//    window.console.log();
+//    window.console.log(simulationDetails);
     var arrDraw = simulationDetails.draw;
     var arrUnumbers = simulationDetails.uNumbers;
     var arrCountGoodBalls = simulationDetails.goodBalls;
@@ -277,8 +277,8 @@ $(function () {
         $(this).bootstrapToggle({
             on: (k + 1),
             off: (k + 1),
-            onstyle: 'success',
-            offstyle: 'danger',
+            //onstyle: 'success',
+            //offstyle: 'danger',
         })
     })
 
@@ -341,8 +341,6 @@ $(function () {
             }
         }
     })
-
-
 
 })
 

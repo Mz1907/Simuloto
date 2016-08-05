@@ -28,13 +28,9 @@ class LottoSimulation extends Simulottery implements ISimulottery
     public function __construct()
     {
         $this->setName("Lotto");
-
         $this->setMinNb(1);
-
         $this->setMaxNb(45);
-
         $this->setCountDraw(7);
-
         $this->setScore([
             "1" => 0,
             "2" => 0,

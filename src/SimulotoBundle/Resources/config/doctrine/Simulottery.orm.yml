@@ -12,14 +12,15 @@ SimulotoBundle\Entity\Simulottery:
         name:
             type: string
             length: 255
+            unique: true
+        countGames:
+            type: smallint
         minNb:
             type: smallint
         maxNb:
             type: smallint
-        countNb:
-            type: smallint
         countDraw:
-            type: integer
+            type: smallint
         draw:
             type: array
         uNumbers:

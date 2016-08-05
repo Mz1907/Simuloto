@@ -1,49 +1,55 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace SimulotoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use SimulotoBundle\Entity\LottoSimulation;
+use SimulotoBundle\Entity\EuromillionsSimulation;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
- * Description of FormBuilderController
+ * Description of EuromillionsSimulationFormController
  *
  * @author Admin
  */
-class FormBuilderController extends Controller
+class EuromillionsSimulationFormController extends Controller
 {
 
-    public function LottoSimulationFormAction()
+    public function EuromillionsSimulationFormAction()
     {
-        $lt = new LottoSimulation();
+        $eur = new EuromillionsSimulation();
 
         $data = [];
 
         $formBuilder = $this->createFormBuilder($data);
 
-        /** building Lotto grid with checkboxes * */
-        for ($i = 1; $i <= $lt->getMaxNb(); $i++)
+        /** building Euromillions BALLS grid with checkboxes * */
+        for ($i = 1; $i <= ($eur->getMaxNb() + $eur->getMaxStars()); $i++)
         {
+            if($i <= 50)
+            {
+                $class = 'ballsCheckBox';
+            }
+            elseif($i >= 51 && $i <= 62)
+            {
+                $class = 'starsCheckBox';
+            }
+            
             $formBuilder->add($i, CheckboxType::class, [
                 'label' => $i,
                 'required' => false,
                 'attr' => [
-                    'class' => 'ballsCheckBox',
+                    'class' => $class,
                     'data-toggle' => 'toggle',
                     'data-style' => 'ios',
+                    'data-onstyle' => 'primary',
+                    'data-offstyle' => 'warning',
                     'value' => $i
                 ]
             ]);
         }
+
 
         $formBuilder->add('Nombre_de_tirages', ChoiceType::class, [
             'choices' => [
@@ -66,8 +72,8 @@ class FormBuilderController extends Controller
 
         $form = $formBuilder->getForm();
 
-        return $this->render("SimulotoBundle:Lotto:content.html.twig", [
-                    "form" => $form->createview()
+        return $this->render("SimulotoBundle:Euromillions:content.html.twig", [
+                    "form" => $form->createview(),
         ]);
     }
 

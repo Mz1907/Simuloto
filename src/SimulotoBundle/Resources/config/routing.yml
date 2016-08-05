@@ -5,17 +5,37 @@ simuloto_homepage:
 #LottoSimulation routes
 play_lotto_game:
     path:     /playLotto
-    defaults: { _controller: SimulotoBundle:FormBuilder:LottoSimulationForm}
+    defaults: { _controller: SimulotoBundle:LottoSimulationForm:LottoSimulationForm}
         
 execute_lotto_simulation:
     path:     /executeLotto
     defaults: { _controller: SimulotoBundle:Lotto:mainPlay}
     options:
         expose: true
-        
+
+#EuromillionsSimulation routes
+play_euromillions_game:
+    path:     /playEuromillions
+    defaults: { _controller: SimulotoBundle:EuromillionsSimulationForm:EuromillionsSimulationForm}
+    
+execute_euromillions_simulation:
+    path:     /executeEuromillions
+    defaults: { _controller: SimulotoBundle:Euromillions:mainPlay}
+    options:
+        expose: true
+
 about:
     path: /about
     defaults: { _controller: SimulotoBundle:Default:showAbout}
+    
+#tesing routes
+testValid:
+    path: /testValid
+    defaults: { _controller: SimulotoBundle:Default:testValid}
+    
+testBuildScore:
+    path: /testScore
+    defaults: { _controller: SimulotoBundle:Default:testBuildScore}
 
     
         

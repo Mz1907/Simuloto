@@ -1,10 +1,5 @@
 {% extends '::base.html.twig' %}
 
-{% block lottoSimulationJs %}
-{%  javascripts 'bundles/simuloto/js/lottoSimulation.js' %}
-    <script src="{{ asset_url }}"></script>
-{% endjavascripts %}
-{% endblock %}
 
 {% block content %}
     <!-- Page Content -->
@@ -27,12 +22,11 @@
                     <img class="img-responsive" src="http://placehold.it/800x300" alt="">
                     <div class="caption-full">
                         <h4 class="pull-right">Cochez minimum 6 chiffres (max 10 chiffres)</h4>
-                        <h1><a href="#">Simulation lotto belge</a></h1>
-                        {% include 'SimulotoBundle:Lotto:form_lotto_simulation.html.twig' %}
+                        <h1><a href="#">Simulation Euromillions</a></h1>
+                        {% include 'SimulotoBundle:Euromillions:form_euromillions_simulation.html.twig' %}
                         <div id="score"></div>
                         <div id="scoreDetails"></div>
                         <div id="details"></div>
-
                         <p>Some content</p>
                     </div>
                 </div>

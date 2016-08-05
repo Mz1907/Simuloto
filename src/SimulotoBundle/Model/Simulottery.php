@@ -2,14 +2,8 @@
 
 namespace SimulotoBundle\Model;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Simulottery
- * 
- * @OneToMany(targetEntity="LottoSimulation", mappedBy="Simulottery")
- * 
- * @ORM\Entity
  */
 class Simulottery
 {
@@ -22,6 +16,11 @@ class Simulottery
      * @var string
      */
     private $name;
+
+    /**
+     * @var int
+     */
+    private $countGames;
 
     /**
      * @var int
@@ -91,6 +90,30 @@ class Simulottery
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set countGames
+     *
+     * @param integer $countGames
+     *
+     * @return Simulottery
+     */
+    public function setCountGames($countGames)
+    {
+        $this->countGames = intval($countGames);
+
+        return $this;
+    }
+
+    /**
+     * Get countGames
+     *
+     * @return int
+     */
+    public function getCountGames()
+    {
+        return $this->countGames;
     }
 
     /**
@@ -172,7 +195,7 @@ class Simulottery
      *
      * @return Simulottery
      */
-    public function setDraw(array $draw)
+    public function setDraw($draw)
     {
         $this->draw = $draw;
 
@@ -196,7 +219,7 @@ class Simulottery
      *
      * @return Simulottery
      */
-    public function setUNumbers(array $uNumbers)
+    public function setUNumbers($uNumbers)
     {
         $this->uNumbers = $uNumbers;
 

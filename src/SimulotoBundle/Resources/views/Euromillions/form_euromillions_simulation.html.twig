@@ -1,0 +1,31 @@
+{# Attention les étoiles de l'euromillions s'affichent via la value de leur label  #}
+
+{% if form is defined %}
+    {% form_theme form ':default:form_custom.html.twig' %}
+    {{ form_start(form) }}
+        {% for LottoItem in form.children %}
+            {% if loop.index == 7 or loop.index == 13 or loop.index == 19 or loop.index == 25
+                              or loop.index == 31 or loop.index == 37 or loop.index == 43 
+                              or loop.index == 49
+                              and LottoItem.vars.id != 'form_Simuler' %}
+                <br />
+            {% endif %}
+            {% if loop.index is divisibleby(51) and LottoItem.vars.id != 'form_Simuler' or loop.index == 62 %}
+                <br /><br />
+                {% if loop.index is divisibleby(51) and LottoItem.vars.id != 'form_Simuler' %}
+                    {{"<h4>&Eacute;toiles:</h4>"}}
+                {% endif %}
+            {% endif %}
+            
+            {% if loop.index <= 51 or  LottoItem.vars.id != 'form_Simuler' or LottoItem.vars.id != 'form_Nombre_de_tirage'%}
+                {{form_row(LottoItem)}}
+            {% endif %}
+       
+            {% if LottoItem.vars.label >= 1 and LottoItem.vars.label <= 11 %}
+                
+                {{form_row(LottoItem)}}
+            {% endif %}
+        {% endfor %}
+    {{ form_end(form) }}
+{% endif %}
+
