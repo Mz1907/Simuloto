@@ -15,7 +15,6 @@ class LottoController extends Controller implements ISimulotteryController
 
     use TraitSimulottery;
     
-    
     /**
      * Main method of a lotto simulation
      * 
@@ -87,8 +86,7 @@ class LottoController extends Controller implements ISimulotteryController
                 'validation' => $validation
             ];
         }
-        
-        
+             
         return new JsonResponse($response);
     }
     
@@ -213,5 +211,4 @@ class LottoController extends Controller implements ISimulotteryController
             return $validation;
         }
     }
-
 }
