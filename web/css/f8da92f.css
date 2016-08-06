@@ -8,8 +8,8 @@ and open the template in the editor.
     Author     : Admin
 */
 
-.countGames{
-    margin-top: 15px;
+.customAlert{
+    margin-top: 10px;
 }
 
 /** solution for having small select width in bootstrap brought by this stackoverflow topic:

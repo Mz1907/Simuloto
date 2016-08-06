@@ -50,8 +50,7 @@ function sendUNumbers(uNumbers, uStars, countGames) {
                             var $div = $("<div>");
                             $div.addClass('alert alert-danger customAlert').html('<strong>' + response.message + '<strong>');
                             /** add div alert error to the dom **/
-                            $('#details').append($div);
-                        
+                            $('#details').append($div);     
                     }
                 }
 

@@ -221,7 +221,7 @@ function buildSimulationDetails(simulationDetails, countGames) {
             if (k == drawLength) {
                 s += '(' + v + ')';
             } else
-                s += v + ' ';
+                s += v + ' - ';
         });
         // delete white space at the end
         s = s.trim();
@@ -232,10 +232,11 @@ function buildSimulationDetails(simulationDetails, countGames) {
 
         /** parse uNumbers numbers to set to td2 **/
         $.each(uNumbersToParse, function (k, v) {
-            s += v + ' ';
+            s += v + '  - ';
         });
         // delete white aspace at the end
         s = s.trim();
+        s = s.substr(0, s.length - 1);
         $td2.append(s);
         $tr.append($td2);
         s = '';

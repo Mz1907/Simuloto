@@ -73,18 +73,22 @@ class LottoController extends Controller implements ISimulotteryController
 
             //create JsonResponse
             $response = [
+                'code' => 100,
+                'success' => true,
                 'countGames' => $countGames,
                 'arrSimulationDetails' => $arrSimulatonDetails, 
                 'score' => $lt->getScore(),
-                'code' => 100,
-                'success' => true,
-                'validation' => $validation
+                'validation' => $validation,
+                'message' => $validation['message']
             ];
         } else
         {
             $response = [
+                'code' => 100,
+                'success' => true,
                 'response' => 'non-valide',
-                'validation' => $validation
+                'validation' => $validation,
+                'message' => $validation['message']
             ];
         }
              
@@ -171,7 +175,7 @@ class LottoController extends Controller implements ISimulotteryController
         if ($countGames !== 1 && $countGames !== 10 && $countGames !== 100 && $countGames !== 1000)
         {
             $validation['isValide'] = false;
-            $validation['message'] = 'error countGames';
+            $validation['message'] = 'Error countGames';
             $validation['countGame'] = $countGames;
             return $validation;
         }
