@@ -5,21 +5,28 @@
         <group name="Examen_php">
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/views/Euromillions/form_euromillions_simulation.html.twig</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Repository/LottoSimulationRepository.php</file>
+            <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/config/doctrine/Simulottery.orm.yml</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Controller/EuromillionsController.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/tests/SimulotoBundle/SimulotteryTest.php</file>
-            <file>file:/C:/xampp/htdocs/Simuloto/app/Resources/views/default/footer.html.twig</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/css/euromillions_simulation_custom.css</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Controller/EuromillionsSimulationFormController.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Util/ISimulottery.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/css/bootstrap.css</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/js/lottoSimulation.js</file>
+            <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Controller/LotoFrSimulationFormController.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Util/TraitSimulottery.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/config/routing.yml</file>
             <file>file:/C:/xampp/htdocs/Simuloto/app/Resources/views/base.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Entity/LotoFrSimulation.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Entity/LottoSimulation.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/css/styles.css</file>
+            <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Entity/EuromillionsSimulation.php</file>
+            <file>file:/C:/xampp/htdocs/Simuloto/app/Resources/views/default/head.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/views/LotoFr/content.html.twig</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/views/Euromillions/content.html.twig</file>
             <file>file:/C:/xampp/htdocs/Simuloto/composer.json</file>
+            <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/views/LotoFr/form_lotoFr_simulation.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/config/doctrine/LotoFrSimulation.orm.yml</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/SimulotoBundle.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/app/config/routing.yml</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Tests/Controller/LottoControllerTest.php</file>
@@ -28,6 +35,7 @@
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/css/lotto_simulation_custom.css</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/js/bootstrap.js</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/views/Lotto/form_lotto_simulation.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Controller/LotoFrController.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Controller/LottoSimulationFormController.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Controller/LottoController.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/js/jquery.js</file>
@@ -36,9 +44,11 @@
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/css/bootstrap.min.css</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Controller/DefaultController.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/config/services.yml</file>
+            <file>file:/C:/xampp/htdocs/Simuloto/app/Resources/views/default/includes.html.twig</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Util/ISimulotteryController.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/app/config/routing_dev.yml</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/js/euromillionsSimulation.js</file>
+            <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/js/lotoFrSimulation.js</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/views/Lotto/content.html.twig</file>
         </group>
     </open-files>

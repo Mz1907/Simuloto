@@ -1,26 +1,21 @@
-/** functions definitions **/
-
-
 /**
  * execute an ajax call
  * @param uNumbers array: numbers selected by user from checkboxes
  * @param countGames array: count how many draw simulation has to do
  **/
 
-function sendUNumbers(uNumbers, countGames) {
+function sendUNumbers(uNumbers, uChance, countGames) {
 
     /** creating ajax request **/
-    var url = Routing.generate('execute_lotto_simulation');
-
+    var url = Routing.generate('execute_euromillions_simulation');
 
     $.post(
             url,
-            {uNumbers: uNumbers, countGames: countGames},
+            {uNumbers: uNumbers, uChance: uChance, countGames: countGames},
             function (response) {
-                if (response.code == 100 && response.success) {//dummy check
+                if (response.code == 100 && response.success) {
                     window.console.log(response);
                     if (response.validation.message == "none") {
-
                         var score = response.score;
                         var simulationDetails = response.arrSimulationDetails;
                         var countGames = response.countGames;
@@ -46,24 +41,24 @@ function sendUNumbers(uNumbers, countGames) {
                                 });
                             }
                         })
-
                     } else {
                         /** creating div alert error  **/
-                        if ($('.customAlert')) {
-                            $('.customAlert').remove();
-                        }
-                        var $div = $("<div>");
-                        $div.addClass('alert alert-danger customAlert').html('<strong>' + response.message + '<strong>');
-                        /** add div alert error to the dom **/
-                        $('#details').append($div);
+
+                            if($('.customAlert')){
+                                $('.customAlert').remove();
+                            }
+                            var $div = $("<div>");
+                            $div.addClass('alert alert-danger customAlert').html('<strong>' + response.message + '<strong>');
+                            /** add div alert error to the dom **/
+                            $('#details').append($div);     
                     }
                 }
 
             }, 'json');
 }
 
-/** 
- * disable all unchecked balls 
+/**
+ * disable all unchecked balls
  * this function is used when when selectedBalls.length >= 10
  * **/
 function disableUnchecked($allBalls) {
@@ -71,8 +66,6 @@ function disableUnchecked($allBalls) {
         if (!$(this).attr('checked')) {
             /** needs to add class 'disabled to div parent to set "grey effect" on disable checkbox '**/
             $(this).attr('disabled', true).closest('div').addClass('disabled');
-            /** enable form submit button **/
-            $("#form_Simuler").removeAttr('disabled');
         }
     })
 }
@@ -85,18 +78,16 @@ function enableDisabled($allBalls) {
     $allBalls.each(function () {
         if ($(this).attr('disabled')) {
             $(this).removeAttr('disabled').closest('div').removeClass('disabled');
-            /** disable form submit button **/
-            $("#form_Simuler").attr('disabled', true);
         }
     })
 }
 
 /**
- *  build an html table representing lotto score
+ *  build an html table representing euromillions score
  *  and attach it to the dom !
- *  
+ *
  *  @param jsonObject score
- *  
+ *
  *  @return objectHTML <table>
  */
 function buildHtmlTable(score) {
@@ -132,8 +123,8 @@ function buildHtmlTable(score) {
     return $table;
 }
 
-/** 
- * replace key of jsonObject var score key -> key  O = 6 good numbers, key 1 = 5+ good numbers , etc 
+/**
+ * replace key of jsonObject var score key -> key  O = 6 good numbers, key 1 = 5+ good numbers , etc
  * @param int key
  * @return string
  * **/
@@ -143,28 +134,44 @@ function replaceKey(key) {
     // -1 because key begin with 1 in json object
     switch (parseInt(key)) {
         case 1:
-            result = "6";
+            result = "5 + 2";
             break;
         case 2:
-            result = "5+";
+            result = "5 + 1";
             break;
         case 3:
             result = "5";
             break;
         case 4:
-            result = "4+";
+            result = "4 + 2";
             break;
         case 5:
-            result = "4";
+            result = "4 + 1";
             break;
         case 6:
-            result = "3+";
+            result = "4";
             break;
         case 7:
-            result = "3";
+            result = "3 + 2";
             break;
         case 8:
-            result = "2+";
+            result = "2 + 2";
+            break;
+        case 9:
+            result = "3 + 1";
+            break;
+        case 10:
+            result = "3 + 0";
+            break;
+        case 11:
+            result = "1 + 2";
+            break;
+        case 12:
+            result = "2 + 1";
+            break;
+
+        case 13:
+            result = "2 + 0";
             break;
     }
 
@@ -172,17 +179,20 @@ function replaceKey(key) {
 }
 
 /**
- *  build build an html table representing detailled simulation result 
+ *  build an html table representing detailled simulation result
  *  @param simulationDetails json object
- *  
+ *
  *  @return objectHTML <table>
  */
 function buildSimulationDetails(simulationDetails, countGames) {
 //    window.console.log();
 //    window.console.log(simulationDetails);
     var arrDraw = simulationDetails.draw;
+    var arrDrawuChance = simulationDetails.drawChance;
     var arrUnumbers = simulationDetails.uNumbers;
+    var arrUChance = simulationDetails.uChance;
     var arrCountGoodBalls = simulationDetails.goodBalls;
+    var arrCountGoodChance = simulationDetails.goodChance;
 
     var $table = $('<table>');
     var $thead = $('<thead>');
@@ -192,12 +202,18 @@ function buildSimulationDetails(simulationDetails, countGames) {
     /** building thead **/
     $tr = $('<tr>');
     var $th1 = $('<th>').html('Tirage');
-    var $th2 = $('<th>').html('Vos numéros');
-    var $th3 = $('<th>').html('Bons numéros');
+    var $th2 = $('<th>').html('Tirage étoiles');
+    var $th3 = $('<th>').html('Vos numéros');
+    var $th4 = $('<th>').html('Vos étoiles');
+    var $th5 = $('<th>').html('Bons numéros');
+    var $th6 = $('<th>').html('Bonnes étoiles');
 
     $tr.append($th1);
     $tr.append($th2);
     $tr.append($th3);
+    $tr.append($th4);
+    $tr.append($th5);
+    $tr.append($th6);
     $thead.append($tr);
     $table.append($thead);
 
@@ -207,49 +223,90 @@ function buildSimulationDetails(simulationDetails, countGames) {
         var $td1 = $('<td>');
         var $td2 = $('<td>');
         var $td3 = $('<td>');
+        var $td4 = $('<td>');
+        var $td5 = $('<td>');
+        var $td6 = $('<td>');
 
         var drawToParse = arrDraw[i];
+        var drawChanceToParse = arrDrawChance[i];
         var uNumbersToParse = arrUnumbers[i];
+        var uChanceToParse = arrUChance[i];
         var goodBallsToParse = arrCountGoodBalls[i];
+        var goodChanceToParse = arrCountGoodChance[i];
+
+
         var s = ''; // the string to add into each <td>
         var drawLength = Object.keys(drawToParse).length;
 
-        /** parse draw numbers to set to td1 **/
+        /** parse draw numbers **/
         $.each(drawToParse, function (k, v) {
-            //comp number will be printed between parenthesis
-            if (k == drawLength) {
-                s += '(' + v + ')';
-            } else
-                s += v + ' - ';
+            s += v + ' - ';
         });
         // delete white space at the end
         s = s.trim();
+        s = s.substr(0, s.length - 1);
         $td1.append(s);
         $tr.append($td1);
         s = '';
 
-
-        /** parse uNumbers numbers to set to td2 **/
-        $.each(uNumbersToParse, function (k, v) {
-            s += v + '  - ';
+        /** parse draw Chance **/
+        $.each(drawChanceToParse, function (k, v) {
+            s += v + ' - ';
         });
-        // delete white aspace at the end
+        // delete white space at the end
         s = s.trim();
         s = s.substr(0, s.length - 1);
         $td2.append(s);
         $tr.append($td2);
         s = '';
 
-        /** parse goodBalls numbers to set to td3 **/
-        $.each(goodBallsToParse, function (k, v) {
 
+        /** parse uNumbers **/
+        $.each(uNumbersToParse, function (k, v) {
+            s += v + ' - ';
+        });
+        // delete white space at the end
+        s = s.trim();
+        s = s.substr(0, s.length - 1);
+        $td3.append(s);
+        $tr.append($td3);
+        s = '';
+
+
+        /** parse uChance **/
+        $.each(uChanceToParse, function (k, v) {
             s += v + ' - ';
         });
         // delete white aspace at the end
         s = s.trim();
         s = s.substr(0, s.length - 1);
-        $td3.append(s);
-        $tr.append($td3);
+        $td4.append(s);
+        $tr.append($td4);
+        s = '';
+
+
+        /** parse goodBalls **/
+        $.each(goodBallsToParse, function (k, v) {
+            s += v + ' - ';
+        });
+        // delete white aspace at the end
+        s = s.trim();
+        s = s.substr(0, s.length - 1);
+        $td5.append(s);
+        $tr.append($td5);
+        s = '';
+
+
+        /** parse goodChance **/
+        $.each(goodChanceToParse, function (k, v) {
+            s += v + ' - ';
+        });
+        // delete white aspace at the end
+        s = s.trim();
+        s = s.substr(0, s.length - 1);
+        $td6.append(s);
+        $tr.append($td6);
+        s = '';
 
         //now I can append <tr> on <tbody>
         $tbody.append($tr);
@@ -264,11 +321,66 @@ function buildSimulationDetails(simulationDetails, countGames) {
 
 }
 
+/** convert Chance value 51 will be 1, 52 will be 2, . . . **/
+function convertChanceValue(num) {
+    switch (parseInt(num)) {
+
+        case 50:
+            num = 1;
+            break;
+        case 51:
+            num = 2;
+            break;
+        case 52:
+            num = 3;
+            break;
+        case 53:
+            num = 4;
+            break;
+        case 54:
+            num = 5;
+            break;
+        case 55:
+            num = 6;
+            break;
+        case 56:
+            num = 7;
+            break;
+        case 57:
+            num = 8;
+            break;
+        case 58:
+            num = 9;
+            break;
+        case 59:
+            num = 10;
+            break;
+        case 60:
+            num = 11;
+            break;
+    }
+    return num;
+}
 
 
-/** Execution **/
+/**
+ * Replace Chance value ex 51 will be 1, 52 will be 2
+ */
+function replaceChanceValue() {
+    var $labelsCollect = $('label.btn');
+
+    $labelsCollect.each(function (k) {
+        /* balls or Chance num */
+        var num = $(this).html();
+        if ($(this).html() >= 51 && $(this).html() <= 61) {
+            num = convertChanceValue(num);
+            $(this).html(num);
+        }
+    })
+}
 
 $(function () {
+    //replaceChanceValue();
     /** form submit prevent default (it uses ajax to send data) **/
     $('form').on({
         submit: function () {
@@ -277,18 +389,29 @@ $(function () {
     });
     /** using http://www.bootstraptoggle.com/ **/
     var countBalls = 0; // how many balls are selected by user (min 6, max 10)
-    var minBalls = 6; // user must select min 6 balls
+    var countChance = 0;
+
+
+    var minBalls = 5; // user must select min 6 balls
     var maxBalls = 10; // user must select max 10 balls
 
+    var minChance = 2;
+    var maxChance = 11;
+
     var $allBalls = $('.ballsCheckBox'); // collection of Lotto balls
+    var $allChance = $('.ChanceCheckBox');
+
     var selectedBalls = []; // value of user's selected balls ex:[4, 17, 22, 29, 36, 45]
+    var selectedChance = [];
+
     var countGames;
 
     /** balls config and style  **/
     $(':checkbox').each(function (k, v) {
+        k = convertChanceValue(k + 1);
         $(this).bootstrapToggle({
-            on: (k + 1),
-            off: (k + 1)
+            on: (k),
+            off: (k)
         })
     })
 
@@ -303,7 +426,7 @@ $(function () {
     $allBalls.each(function (k, v) {
         $(this).on({
             change: function () {
-                var ball = $(this).val();
+                var ball = parseInt($(this).val());
                 //if ball already present in selectedBalls then remove it from that array
                 if ($.inArray(ball, selectedBalls) != -1) {
                     $(this).attr('checked', false);
@@ -311,26 +434,29 @@ $(function () {
                     countBalls--;
 
                     window.console.log("selectedBalls.length = " + selectedBalls.length);
+                    window.console.log("selectedChance.length = " + selectedChance.length);
 
                     if (selectedBalls.length == 9) {
                         enableDisabled($allBalls);
-                        $("#form_Simuler").removeAttr('disabled');
                     }
 
-                    if (selectedBalls.length == 5) {
+                    if (selectedBalls.length == 4) {
                         $("#form_Simuler").attr('disabled', true);
                     }
 
                 } else {
                     //if ball not present in selectedBalls array
                     $(this).attr('checked', true);
-                    selectedBalls.push(ball);
+                    selectedBalls.push(parseInt(ball));
                     countBalls++;
 
                     window.console.log("selectedBalls.length = " + selectedBalls.length);
+                    window.console.log("selectedChance.length = " + selectedChance.length);
 
-                    if (selectedBalls.length == 6) {
+                    if (selectedBalls.length >= 5 && selectedBalls.length <= 10 && selectedChance.length > 1) {
+                        window.console.log("oui");
                         $("#form_Simuler").removeAttr('disabled');
+
                     }
                     if (selectedBalls.length >= 10) {
                         disableUnchecked($allBalls);
@@ -340,21 +466,62 @@ $(function () {
         })
     })
 
+    /** retrieves user selected Chance **/
+    $allChance.each(function (k, v) {
+        $(this).on({
+            change: function () {
+                var chance = $(this).val();
+                chance = convertChanceValue(chance);
+
+                //if ball already present in selectedBalls then remove it from that array
+                if ($.inArray(chance, selectedChance) != -1) {
+                    $(this).attr('checked', false);
+                    selectedChance.splice(selectedChance.indexOf(chance), 1);
+                    countChance--;
+
+                    window.console.log("selectedBalls.length = " + selectedBalls.length);
+                    window.console.log("selectedChance.length = " + selectedChance.length);
+
+                    if (selectedChance.length == 1) {
+                        window.console.log("aaaaa");
+                        $("#form_Simuler").attr('disabled', true);
+                    }
+
+                } else {
+                    //if ball not present in selectedBalls array
+                    $(this).attr('checked', true);
+                    selectedChance.push(parseInt(chance));
+                    countChance++;
+
+                    window.console.log("selectedBalls.length = " + selectedBalls.length);
+                    window.console.log("selectedChance.length = " + selectedChance.length);
+
+                    if (selectedBalls.length >= 5 && selectedBalls.length <= 10 && selectedChance.length > 1) {
+                        window.console.log("zzz");
+                        $("#form_Simuler").removeAttr('disabled');
+                    }
+
+                }
+            }
+        })
+    })
+
     /** add eventListener on button sumbit to send ajax **/
     $('#form_Simuler').on({
         click: function (e) {
             e.preventDefault();
+            countGames = $('#form_Nombre_de_tirages').val();
             window.console.log('ok japan !');
-            if (countBalls >= 6 && countBalls <= 10) {
+            if (countBalls >= 5 && countBalls <= 10 && countChance >= 2) {
                 window.console.log('ok usa !');
+                window.console.log(countGames);
                 window.console.log(selectedBalls);
+                window.console.log(selectedChance);
                 /** retrives countGames before ajax process **/
                 countGames = $('#form_Nombre_de_tirages').val();
-                sendUNumbers([selectedBalls], countGames);
-
+                sendUNumbers(selectedBalls, selectedChance, countGames);
             }
         }
     })
 
-})
-
+});

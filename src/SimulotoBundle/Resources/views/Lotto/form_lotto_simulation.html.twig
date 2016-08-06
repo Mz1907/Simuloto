@@ -7,7 +7,7 @@
                               and LottoItem.vars.id != 'form_Simuler' %}
                 <br />
             {% endif %}
-            {% if loop.index is divisibleby(46) and LottoItem.vars.id != 'form_Simuler' %}
+            {% if loop.index is divisible by(46) and LottoItem.vars.id != 'form_Simuler' %}
                 <br /><br />
                 {{ form_label(LottoItem) }}
             {% endif %}

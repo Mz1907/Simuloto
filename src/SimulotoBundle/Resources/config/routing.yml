@@ -24,6 +24,17 @@ execute_euromillions_simulation:
     options:
         expose: true
 
+#LotoFr routes
+play_loto_game:
+    path:     /playLoto
+    defaults: { _controller: SimulotoBundle:LotoFrSimulationForm:LotoFrSimulationForm}
+    
+execute_euromillions_simulation:
+    path:     /executeLotoFr
+    defaults: { _controller: SimulotoBundle:LotoFr:mainPlay}
+    options:
+        expose: true
+
 about:
     path: /about
     defaults: { _controller: SimulotoBundle:Default:showAbout}

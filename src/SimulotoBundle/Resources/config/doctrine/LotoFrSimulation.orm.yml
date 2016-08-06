@@ -1,0 +1,24 @@
+SimulotoBundle\Entity\LotoFrSimulation:
+    type: entity
+    table: null
+    repositoryClass: SimulotoBundle\Repository\LotoFrSimulationRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        minChance:
+            type: smallint
+        maxChance:
+            type: smallint
+        countDrawChance:
+            type: smallint
+        drawChance:
+            type: array
+        uChance:
+            type: array
+        goodChance:
+            type: array
+    lifecycleCallbacks: {  }
