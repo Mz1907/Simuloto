@@ -42,8 +42,8 @@ class LotoFrSimulationFormController extends Controller
                     'class' => $class,
                     'data-toggle' => 'toggle',
                     'data-style' => 'ios',
-                    'data-onstyle' => 'primary',
-                    'data-offstyle' => 'danger',
+                    'data-onstyle' => 'danger',
+                    'data-offstyle' => 'info',
                     'value' => $i
                 ]
             ]);

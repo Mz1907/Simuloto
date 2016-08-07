@@ -49,7 +49,6 @@ function sendUNumbers(uNumbers, countGames) {
 
                     } else {
                         /** creating div alert error  **/
-
                         if ($('.customAlert')) {
                             $('.customAlert').remove();
                         }

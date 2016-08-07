@@ -7,7 +7,7 @@
 function sendUNumbers(uNumbers, uChance, countGames) {
 
     /** creating ajax request **/
-    var url = Routing.generate('execute_euromillions_simulation');
+    var url = Routing.generate('execute_lotoFr_simulation');
 
     $.post(
             url,
@@ -134,44 +134,22 @@ function replaceKey(key) {
     // -1 because key begin with 1 in json object
     switch (parseInt(key)) {
         case 1:
-            result = "5 + 2";
+            result = "5 + n&deg; chance";
             break;
         case 2:
-            result = "5 + 1";
-            break;
-        case 3:
             result = "5";
             break;
-        case 4:
-            result = "4 + 2";
-            break;
-        case 5:
-            result = "4 + 1";
-            break;
-        case 6:
+        case 3:
             result = "4";
             break;
-        case 7:
-            result = "3 + 2";
+        case 4:
+            result = "3";
             break;
-        case 8:
-            result = "2 + 2";
+        case 5:
+            result = "2";
             break;
-        case 9:
-            result = "3 + 1";
-            break;
-        case 10:
-            result = "3 + 0";
-            break;
-        case 11:
-            result = "1 + 2";
-            break;
-        case 12:
-            result = "2 + 1";
-            break;
-
-        case 13:
-            result = "2 + 0";
+        case 6:
+            result = "N&deg; chance";
             break;
     }
 
@@ -188,7 +166,7 @@ function buildSimulationDetails(simulationDetails, countGames) {
 //    window.console.log();
 //    window.console.log(simulationDetails);
     var arrDraw = simulationDetails.draw;
-    var arrDrawuChance = simulationDetails.drawChance;
+    var arrDrawChance = simulationDetails.drawChance;
     var arrUnumbers = simulationDetails.uNumbers;
     var arrUChance = simulationDetails.uChance;
     var arrCountGoodBalls = simulationDetails.goodBalls;
@@ -202,11 +180,11 @@ function buildSimulationDetails(simulationDetails, countGames) {
     /** building thead **/
     $tr = $('<tr>');
     var $th1 = $('<th>').html('Tirage');
-    var $th2 = $('<th>').html('Tirage étoiles');
+    var $th2 = $('<th>').html('Tirage N&deg; chance');
     var $th3 = $('<th>').html('Vos numéros');
-    var $th4 = $('<th>').html('Vos étoiles');
+    var $th4 = $('<th>').html('Vos N&deg; chance');
     var $th5 = $('<th>').html('Bons numéros');
-    var $th6 = $('<th>').html('Bonnes étoiles');
+    var $th6 = $('<th>').html('Bons N&deg; chance');
 
     $tr.append($th1);
     $tr.append($th2);
@@ -399,7 +377,7 @@ $(function () {
     var maxChance = 11;
 
     var $allBalls = $('.ballsCheckBox'); // collection of Lotto balls
-    var $allChance = $('.ChanceCheckBox');
+    var $allChance = $('.chanceCheckBox');
 
     var selectedBalls = []; // value of user's selected balls ex:[4, 17, 22, 29, 36, 45]
     var selectedChance = [];

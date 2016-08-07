@@ -85,7 +85,7 @@ class LotoFrController extends Controller implements ISimulotteryController
                 $goodChance = $this->goodBalls($uChance, $ltfr->getDrawChance());
                 $ltfr->setGoodChance($goodChance);
 
-                $score = $this->buildScoreAction($eur);
+                $score = $this->buildScoreAction($ltfr);
 
                 $ltfr->setScore($score);
 
@@ -113,11 +113,11 @@ class LotoFrController extends Controller implements ISimulotteryController
     }
 
     /**
-     * @param $eur Euromillionssimulation object
+     * @param $ltfr Euromillionssimulation object
      *
      * @return array
      */
-    public function buildScoreAction($eur)
+    public function buildScoreAction($ltfr)
     {
         $goodBalls = $ltfr->getGoodBalls();
         $goodBalls = $goodBalls['countGoodBalls'];
@@ -131,13 +131,13 @@ class LotoFrController extends Controller implements ISimulotteryController
         {
             switch ($goodBalls)
             {
-                case 5: $score['3'] ++;
+                case 5: $score['2'] ++;
                     break;
-                case 4: $score['6'] ++;
+                case 4: $score['3'] ++;
                     break;
-                case 3: $score['10'] ++;
+                case 3: $score['4'] ++;
                     break;
-                case 2: $score['13'] ++;
+                case 2: $score['5'] ++;
                     break;
             }
             return $score;
@@ -145,29 +145,15 @@ class LotoFrController extends Controller implements ISimulotteryController
         {
             switch ($goodBalls)
             {
-                case 5: $score['2'] ++;
-                    break;
-                case 4: $score['5'] ++;
-                    break;
-                case 3: $score['9'] ++;
-                    break;
-                case 2: $score['12'] ++;
-                    break;
-            }
-            return $score;
-        } elseif ($goodChance == 2)
-        {
-            switch ($goodBalls)
-            {
                 case 5: $score['1'] ++;
                     break;
-                case 4: $score['4'] ++;
+                case 4: $score['3'] ++;
                     break;
-                case 3: $score['7'] ++;
+                case 3: $score['4'] ++;
                     break;
-                case 2: $score['8'] ++;
+                case 2: $score['5'] ++;
                     break;
-                case 1: $score['11'] ++;
+                default : $score['6'] ++;
                     break;
             }
             return $score;

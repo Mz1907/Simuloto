@@ -3,11 +3,9 @@
 
 <head>
 {% embed ':default:head.html.twig' %}{% endembed %}
-
-    {# Euromillions simulation css and js #}
-    {% block euromillionsSimulationIncludes %}{% endblock %}
-    {# LottoSimulation #}
-    {% block lottoSimulationIncludes %}{% endblock %}
+    
+    {# included on simulation content.html.twig  #}
+    {% block simulationIncludes %}{% endblock %}
     <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
     <title>{% block title %}{% endblock %}</title>

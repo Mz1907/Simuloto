@@ -6,18 +6,18 @@
         {% for LottoItem in form.children %}
             {% if loop.index == 7 or loop.index == 13 or loop.index == 19 or loop.index == 25
                               or loop.index == 31 or loop.index == 37 or loop.index == 43 
-                              or loop.index == 48
+                              or loop.index == 49
                               and LottoItem.vars.id != 'form_Simuler' %}
                 <br />
             {% endif %}
-            {% if loop.index is divisible by(48) and LottoItem.vars.id != 'form_Simuler' or loop.index == 60 %}
+            {% if loop.index is divisible by(50) and LottoItem.vars.id != 'form_Simuler' or loop.index == 60 %}
                 <br /><br />
-                {% if loop.index is divisible by(48) and LottoItem.vars.id != 'form_Simuler' %}
+                {% if loop.index is divisible by(50) and LottoItem.vars.id != 'form_Simuler' %}
                     {{"<h4>N&deg; chance</h4>"}}
                 {% endif %}
             {% endif %}
             
-            {% if loop.index <= 49 or  LottoItem.vars.id != 'form_Simuler' or LottoItem.vars.id != 'form_Nombre_de_tirage'%}
+            {% if loop.index <= 50 or  LottoItem.vars.id != 'form_Simuler' or LottoItem.vars.id != 'form_Nombre_de_tirage'%}
                 {{form_row(LottoItem)}}
             {% endif %}
        

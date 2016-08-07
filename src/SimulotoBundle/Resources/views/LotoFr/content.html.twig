@@ -1,8 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Simulation Euromillions en ligne{% endblock %}
-
-{% block euromillionsSimulationIncludes %}
+{% block simulationIncludes %}
 
     {% stylesheets 'bundles/simuloto/css/loto_fr_custom.css' 
                    'bundles/simuloto/css/bootstrap-toggle.css' filter='cssrewrite'  %}
@@ -37,9 +35,9 @@
                 <div class="thumbnail">
                     <img class="img-responsive" src="http://placehold.it/800x300" alt="">
                     <div class="caption-full">
-                        <h4 class="pull-right">Cochez minimum 6 chiffres (max 10 chiffres)</h4>
+                        <h4 class="pull-right">Cochez minimum 5 chiffres (max 10 chiffres)</h4>
                         <h1><a href="#">Simulation Euromillions</a></h1>
-                        {% include 'SimulotoBundle:Euromillions:form_euromillions_simulation.html.twig' %}
+                        {% include 'SimulotoBundle:LotoFr:form_lotoFr_simulation.html.twig' %}
                         <div id="score"></div>
                         <div id="scoreDetails"></div>
                         <div id="details"></div>
