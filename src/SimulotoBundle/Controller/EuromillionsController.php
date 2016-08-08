@@ -185,12 +185,19 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
      * * */
     public function isContentValid(array $arrUNumbers, array $arrUStars, $countGames)
     {
+        /** 
+         * 1. Testing countGames 
+         * 2. Testing $arrNumbers
+         * 3. Testing $arrUStars
+         * 4. Testing pattern grid multiple (is this simulation a legal multiple pattern ?)
+         */
 
         $validation = [
             'isValide' => false,
             'message' => 'none'
         ];
-
+        
+        
         if (is_numeric($countGames) && $countGames > 0)
         {
             if ($countGames !== "1" && $countGames !== "10" && $countGames !== "100" && $countGames !== "1000")
@@ -268,8 +275,48 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
             $validation['message'] = 'Vous devez selectionner minimum 1 &eacute;toile et maximum 11 &eacute;toiles. Error 8';
             return $validation;
         }
+        
+        /** at this point datas are valids **/
+        /** test if uBalls and uStars respect grid "multiple" patterns **/
+        $ballsLength = count($arrUNumbers);
+        $starsLength = count($arrUStars);
 
-        $validation['isValide'] = true;
+        if ($ballsLength >= 5 && $ballsLength <= 7)
+        {
+            if ($starsLength > 1)
+            {
+                $validation['patternMultiple'] = true;
+            }
+        }
+        if ($ballsLength == 8)
+        {
+            if ($starsLength > 1 && $starsLength <= 7)
+            {
+                $validation['patternMultiple'] = true;
+            }
+        }
+        if ($ballsLength == 9)
+        {
+            if ($starsLength > 1 && $starsLength <= 5)
+            {
+                $validation['patternMultiple'] = true;
+            }
+        }
+        if ($ballsLength == 10)
+        {
+            if ($starsLength == 2 || $starsLength == 3)
+            {
+                $validation['patternMultiple'] = true;
+            }
+        } 
+        if($validation['patternMultiple'] !== true){
+            $validation['message'] = 'Vous devez entrer une grille multiple avec un nombre de numéros et d\'étoiles valides';
+            $validation['patternMultiple'] = false;
+            $validation['isValide'] = false;
+        } else{
+            $validation['isValide'] = true;
+        }
+        
         return $validation;
     }
 

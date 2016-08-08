@@ -12,8 +12,10 @@ class DefaultController extends Controller
         return $this->render('SimulotoBundle:default:about.html.twig');
     }
 
-    public function isContentValid(array $arrUNumbers, array $arrUStars, $countGames)
+    public function testValidAction(array $arrUNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9], array $arrUStars = [1, 2, 3, 4, 5], $countGames = "1")
     {
+
+
 
         $validation = [
             'isValide' => false
@@ -70,9 +72,20 @@ class DefaultController extends Controller
             }
         } else
         {
+
+
             $validation['message'] = 'Erreur: Vous devez selectionner minimum 5 chiffres et maximum 10 chiffres. Error 6';
-            return $validation;
+
+            return $this->render('SimulotoBundle:Default:test.html.twig', [
+                        'result' => $validation,
+            ]);
         }
+
+
+
+
+
+
         /**
          * exemple of $arrUStars
          * 
@@ -96,12 +109,57 @@ class DefaultController extends Controller
             $validation['message'] = 'Vous devez selectionner minimum 1 &eacute;toile et maximum 11 &eacute;toiles. Error 8';
             return $validation;
         }
-
+        
+        /** at this point datas are valids **/
         $validation['isValide'] = true;
-        return $validation;
+        $validation['patternMultiple'] = false;
+
+        /** test if uBalls and uStars respect grid "multiple" patterns * */
+        $ballsLength = count($arrUNumbers);
+        $starsLength = count($arrUStars);
+
+        if ($ballsLength >= 5 && $ballsLength <= 7)
+        {
+            if ($starsLength > 1)
+            {
+                $validation['patternMultiple'] = true;
+            }
+        }
+        if ($ballsLength == 8)
+        {
+            if ($starsLength > 1 && $starsLength <= 7)
+            {
+                $validation['patternMultiple'] = true;
+            }
+        }
+        if ($ballsLength == 9)
+        {
+            if ($starsLength > 1 && $starsLength <= 5)
+            {
+                $validation['patternMultiple'] = true;
+            }
+        }
+        if ($ballsLength == 10)
+        {
+            if ($starsLength == 2 || $starsLength == 3)
+            {
+                $validation['patternMultiple'] = true;
+            }
+        } 
+        if($validation['patternMultiple'] !== true){
+            $validation['message'] = 'Vous devez entrer une grille multiple avec un nombre de numéros et d\'étoiles valides';
+            $validation['patternMultiple'] = false;
+            $validation['isValide'] = false;
+        }
+        
+        
+        
+        return $this->render('SimulotoBundle:Default:test.html.twig', [
+                    'result' => $validation
+        ]);
     }
 
-    public function testValidAction()
+    public function testValidAction2()
     {
 
         $arrAllTests = [];
@@ -227,35 +285,35 @@ class DefaultController extends Controller
 
         $score = $this->buildScoreAction(4, 1);
         $result["test5"] = $score['5'] == 1;
-        
+
         $score = $this->buildScoreAction(4, 0);
         $result["test6"] = $score['6'] == 1;
-        
+
         $score = $this->buildScoreAction(3, 2);
         $result["test7"] = $score['7'] == 1;
-        
+
         $score = $this->buildScoreAction(3, 1);
         $result["test8"] = $score['9'] == 1;
-        
+
         $score = $this->buildScoreAction(3, 0);
         $result["test9"] = $score['10'] == 1;
-        
+
         $score = $this->buildScoreAction(2, 2);
         $result["test10"] = $score['8'] == 1;
-        
+
         $score = $this->buildScoreAction(1, 2);
         $result["test11"] = $score['11'] == 1;
-        
+
         $score = $this->buildScoreAction(2, "1");
         $result["test12"] = $score['12'] == false;
-        
+
         $score = $this->buildScoreAction(2, true);
         $result["test13"] = $score['13'] == false;
 
         $score = $this->buildScoreAction(2, [0]);
         $result["test13"] = $score['13'] == false;
-        
-       return $this->render('SimulotoBundle:default:test.html.twig', [
+
+        return $this->render('SimulotoBundle:default:test.html.twig', [
                     'result' => $result
         ]);
     }
