@@ -468,8 +468,8 @@ function enableSubmit(ballsLength, starsLength) {
         if (starsLength == 2 || starsLength == 3) {
             return true;
         }
-    } else
-        return false;
+    }
+    return false;
 }    
 
 

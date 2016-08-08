@@ -44,13 +44,13 @@ function sendUNumbers(uNumbers, uChance, countGames) {
                     } else {
                         /** creating div alert error  **/
 
-                            if($('.customAlert')){
-                                $('.customAlert').remove();
-                            }
-                            var $div = $("<div>");
-                            $div.addClass('alert alert-danger customAlert').html('<strong>' + response.message + '<strong>');
-                            /** add div alert error to the dom **/
-                            $('#details').append($div);     
+                        if ($('.customAlert')) {
+                            $('.customAlert').remove();
+                        }
+                        var $div = $("<div>");
+                        $div.addClass('alert alert-danger customAlert').html('<strong>' + response.message + '<strong>');
+                        /** add div alert error to the dom **/
+                        $('#details').append($div);
                     }
                 }
 
@@ -80,6 +80,104 @@ function enableDisabled($allBalls) {
             $(this).removeAttr('disabled').closest('div').removeClass('disabled');
         }
     })
+}
+
+/**
+ * mustDisabledBalls: check if so called "multiple grid" is valid
+ * 
+ * @param {int} ballsLength: how many selected balls 
+ * @param {int} chanceLength: haow many selected stars
+ * @returns {boolean}
+ */
+function mustDisableBalls(ballsLength, chanceLength) {
+
+
+    if (chanceLength >= 1) {
+        if (ballsLength >= 9) {
+            return true;
+        }
+    }
+    if (chanceLength >= 3) {
+        if (ballsLength >= 8) {
+            return true;
+        }
+    }
+    if (chanceLength >= 8) {
+        if (ballsLength >= 7) {
+            return true;
+        }
+    }
+    if (chanceLength >= 8) {
+        if (ballsLength >= 7) {
+            return true;
+        }
+    }
+    if (chanceLength >= 10) {
+        if (ballsLength >= 6) {
+            return true;
+        }
+    }
+    if(ballsLength >= 9){
+        return true;
+    }
+    return false;
+}
+
+/**
+ * 
+ * @param {int} ballsLength
+ * @param {int} chanceLength
+ * @returns {boolean}
+ */
+function mustDisableChance(ballsLength, chanceLength) {
+    if (ballsLength == 9) {
+        if (chanceLength >= 1) {
+            return true;
+        }
+    }
+    if (ballsLength >= 8) {
+        if (chanceLength >= 3) {
+            return true;
+        }
+    }
+    if (ballsLength >= 7) {
+        if (chanceLength >= 8) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * 
+ * @param {int} ballsLength
+ * @param {int} chanceLength
+ * @returns {boolean}
+ */
+function enableSubmit(ballsLength, chanceLength) {
+    var result = false;
+
+    if (ballsLength == 5 || ballsLength == 6) {
+        if (chanceLength >= 1) {
+            return true;
+        }
+    }
+    if (ballsLength == 7) {
+        if (chanceLength >= 1 && chanceLength <= 8) {
+            return true;
+        }
+    }
+    if (ballsLength == 8) {
+        if (chanceLength >= 1 && chanceLength <= 3) {
+            return true;
+        }
+    }
+    if (ballsLength == 9) {
+        if (chanceLength == 1) {
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
@@ -414,16 +512,35 @@ $(function () {
                     window.console.log("selectedBalls.length = " + selectedBalls.length);
                     window.console.log("selectedChance.length = " + selectedChance.length);
 
-                    if (selectedBalls.length == 9) {
+                     /** testing disable balls **/
+                    var test = mustDisableBalls(selectedBalls.length, selectedChance.length);
+                    window.console.log(test);
+
+                    if (mustDisableBalls(selectedBalls.length, selectedChance.length)) {
+                        disableUnchecked($allBalls);
+                        window.console.log("oui1A");
+
+                    } else {
                         enableDisabled($allBalls);
+                        window.console.log("eeeee");
+                    }
+                    if (mustDisableChance(selectedBalls.length, selectedChance.length)) {
+                        disableUnchecked($allChance);
+                        window.console.log("oui1A");
+
+                    } else {
+                        enableDisabled($allChance);
                     }
 
-                    if (selectedBalls.length == 4) {
+                    if (enableSubmit(selectedBalls.length, selectedChance.length)) {
+                        window.console.log("enable sumbit 2 !");
+                        $("#form_Simuler").removeAttr('disabled');
+                    } else {
                         $("#form_Simuler").attr('disabled', true);
                     }
 
                 } else {
-                    //if ball not present in selectedBalls array
+                                        //if ball not present in selectedBalls array
                     $(this).attr('checked', true);
                     selectedBalls.push(parseInt(ball));
                     countBalls++;
@@ -431,13 +548,34 @@ $(function () {
                     window.console.log("selectedBalls.length = " + selectedBalls.length);
                     window.console.log("selectedChance.length = " + selectedChance.length);
 
-                    if (selectedBalls.length >= 5 && selectedBalls.length <= 10 && selectedChance.length > 1) {
-                        window.console.log("oui");
-                        $("#form_Simuler").removeAttr('disabled');
-
-                    }
-                    if (selectedBalls.length >= 10) {
+                    /** testing disable balls **/
+                    var test = mustDisableBalls(selectedBalls.length, selectedChance.length);
+                    window.console.log(test);
+                    
+                    if (mustDisableBalls(selectedBalls.length, selectedChance.length)) {
                         disableUnchecked($allBalls);
+                        window.console.log("oui1");
+
+                    } else {
+                        enableDisabled($allBalls);
+                        window.console.log('rrrr');
+                    }
+
+                    /** testing disable stars **/
+                    if (mustDisableChance(selectedBalls.length, selectedChance.length)) {
+                        disableUnchecked($allChance);
+                        window.console.log("oui2");
+                    } else {
+                        enableDisabled($allChance);
+                        window.console.log('aaaa');
+                    }
+
+                    /** testing disable submit button **/
+                    if (enableSubmit(selectedBalls.length, selectedChance.length)) {
+                        window.console.log("bbbb");
+                        $("#form_Simuler").removeAttr('disabled');
+                    } else {
+                        $("#form_Simuler").attr('disabled', true);
                     }
                 }
             }
@@ -460,8 +598,32 @@ $(function () {
                     window.console.log("selectedBalls.length = " + selectedBalls.length);
                     window.console.log("selectedChance.length = " + selectedChance.length);
 
-                    if (selectedChance.length == 1) {
-                        window.console.log("aaaaa");
+                                       /** testing disable balls **/
+                    var test = mustDisableBalls(selectedBalls.length, selectedChance.length);
+                    window.console.log(test);
+
+                    /** testing disable balls **/
+                    if (mustDisableBalls(selectedBalls.length, selectedChance.length)) {
+                        disableUnchecked($allBalls);
+                        window.console.log("oui3");
+
+                    } else {
+                        enableDisabled($allBalls);
+                    }
+
+                    /** testing disable stars **/
+                    if (mustDisableChance(selectedBalls.length, selectedChance.length)) {
+                        disableUnchecked($allChance);
+                        window.console.log("oui4");
+                    } else {
+                        enableDisabled($allChance);
+                    }
+
+                    /** testing disable submit button **/
+                    if (enableSubmit(selectedBalls.length, selectedChance.length)) {
+                        window.console.log("oui5");
+                        $("#form_Simuler").removeAttr('disabled');
+                    } else {
                         $("#form_Simuler").attr('disabled', true);
                     }
 
@@ -473,10 +635,34 @@ $(function () {
 
                     window.console.log("selectedBalls.length = " + selectedBalls.length);
                     window.console.log("selectedChance.length = " + selectedChance.length);
+                    
+                    /** testing disable balls **/
+                    var test = mustDisableBalls(selectedBalls.length, selectedChance.length);
+                    window.console.log(test);
 
-                    if (selectedBalls.length >= 5 && selectedBalls.length <= 10 && selectedChance.length > 1) {
-                        window.console.log("zzz");
+                    /** testing disable balls **/
+                    if (mustDisableBalls(selectedBalls.length, selectedChance.length)) {
+                        disableUnchecked($allBalls);
+                        window.console.log("oui6");
+
+                    } else {
+                        enableDisabled($allBalls);
+                    }
+
+                    /** testing disable stars **/
+                    if (mustDisableChance(selectedBalls.length, selectedChance.length)) {
+                        disableUnchecked($allChance);
+                        window.console.log("oui7");
+                    } else {
+                        enableDisabled($allChance);
+                    }
+
+                    /** testing disable submit button **/
+                    if (enableSubmit(selectedBalls.length, selectedChance.length)) {
+                        window.console.log("oui8");
                         $("#form_Simuler").removeAttr('disabled');
+                    } else {
+                        $("#form_Simuler").attr('disabled', true);
                     }
 
                 }

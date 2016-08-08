@@ -254,8 +254,48 @@ class LotoFrController extends Controller implements ISimulotteryController
             $validation['message'] = 'Vous devez selectionner minimum 1 &eacute;toile et maximum 11 &eacute;toiles. Error 8';
             return $validation;
         }
+        
+        /** at this point datas are valids **/
+        /** test if uBalls and uStars respect grid "multiple" patterns **/
+        $ballsLength = count($arrUNumbers);
+        $chanceLength = count($arrUChance);
 
-        $validation['isValide'] = true;
+        if ($ballsLength == 9)
+        {
+            if ($chanceLength == 1)
+            {
+                $validation['patternMultiple'] = true;
+            }
+        }
+        if ($ballsLength == 8)
+        {
+            if ($chanceLength > 1 && $chanceLength <= 3)
+            {
+                $validation['patternMultiple'] = true;
+            }
+        }
+        if ($ballsLength == 7)
+        {
+            if ($chanceLength >= 1 && $chanceLength <= 8)
+            {
+                $validation['patternMultiple'] = true;
+            }
+        }
+        if ($ballsLength == 6 || $ballsLength == 5)
+        {
+            if ($chanceLength >= 1 && $chanceLength <= 10)
+            {
+                $validation['patternMultiple'] = true;
+            }
+        } 
+        if($validation['patternMultiple'] !== true){
+            $validation['message'] = 'Vous devez entrer une grille multiple avec un nombre de numéros et d\'étoiles valides';
+            $validation['patternMultiple'] = false;
+            $validation['isValide'] = false;
+        } else{
+            $validation['isValide'] = true;
+        }
+
         return $validation;
     }
 }
