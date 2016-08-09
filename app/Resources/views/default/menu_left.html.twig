@@ -1,46 +1,8 @@
-<div class="col-sm-4 col-sm-pull-8">
-        <!-- Search -->
-        <div class="well">
-                <h4 class="margin-t-0">Search</h4>
-                <form action="#">
-                        <div class="input-group">
-                                <label class="sr-only" for="search-form">Search the site</label>
-                                <input type="text" class="form-control" id="search-form">
-                                <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">
-                                                <span class="glyphicon glyphicon-search"></span>
-                                                <span class="sr-only">Search</span>
-                                        </button>
-                                </span>
-                        </div>
-                </form>
-        </div>
-
-        <!-- list group -->
-        <div class="list-group margin-b-3">
-            <a href="#" class="active list-group-item">Category 1</a>
-            <a href="#" class="list-group-item">Category 2</a>
-            <a href="#" class="list-group-item">Category 3</a>
-        </div>
-
-        <!-- Panel -->
-        <div class="panel panel-default">
-                <div class="panel-heading">
-                        <h4 class="panel-title">Sidebar panel widget</h4>
-                </div>
-                <div class="panel-body">
-                        <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-                </div>
-        </div>
-
-        <!-- Panel -->
-        <div class="panel panel-default">
-                <div class="panel-heading">
-                        <h4 class="panel-title">Sidebar panel widget</h4>
-                </div>
-                <div class="panel-body">
-                        <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-                </div>
-        </div>
-
+<div class="col-md-3">
+    <p class="lead">Simulations en ligne</p>
+    <div class="list-group">
+        <a href="{{path('play_lotto_game')}}" class="list-group-item linkLotto">Simulation Lotto Belgique</a>
+        <a href="{{path('play_loto_game')}}" class="list-group-item linkLoto">Simulation Loto France</a>
+        <a href="{{path('play_euromillions_game')}}" class="list-group-item linkEuromillions">Simulation Euromillions</a>
+    </div>
 </div>

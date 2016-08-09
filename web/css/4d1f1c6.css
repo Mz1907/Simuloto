@@ -1,12 +1,29 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 6 août 2016, 15:13:44
-    Author     : Admin
-*/
+.customAlert{
+    margin-top: 10px;
+}
+
+.glyphOkColor{
+    color: green;
+}
+
+.glyphRemoveColor{
+    color: red;
+}
+
+.toggle_p{
+    text-decoration: underline;
+    font-weight: bold;
+    color: green;
+}
+
+.toggle_p:hover{
+    cursor: pointer;
+}
+
+#multipleGrid{
+    display: none;
+    margin-bottom: 15px;
+}
 
 
 /*! ========================================================================

@@ -470,7 +470,7 @@ function enableSubmit(ballsLength, starsLength) {
         }
     }
     return false;
-}    
+}
 
 
 $(function () {
@@ -481,6 +481,15 @@ $(function () {
             return false;
         }
     });
+    
+    /** adding class active on menu_left link **/
+    $('.linkEuromillions').addClass('active');
+    
+    /** slidetoggle of html table multipleModel when clicking on p.toggle_p **/
+    $('.toggle_p').click(function(){
+        $('#multipleGrid').slideToggle();
+    })
+    
     /** using http://www.bootstraptoggle.com/ **/
     var countBalls = 0; // how many balls are selected by user (min 6, max 10)
     var countStars = 0;

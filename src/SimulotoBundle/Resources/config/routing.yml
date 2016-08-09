@@ -35,6 +35,7 @@ execute_lotoFr_simulation:
     options:
         expose: true
 
+#about
 about:
     path: /about
     defaults: { _controller: SimulotoBundle:Default:showAbout}

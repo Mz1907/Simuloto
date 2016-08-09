@@ -1,3 +1,27 @@
 .customAlert{
     margin-top: 10px;
 }
+
+.glyphOkColor{
+    color: green;
+}
+
+.glyphRemoveColor{
+    color: red;
+}
+
+.toggle_p{
+    text-decoration: underline;
+    font-weight: bold;
+    color: green;
+    cursor: pointer;
+}
+
+.toggle_p:hover{
+    cursor: pointer;
+}
+
+#multipleGrid{
+    display: none;
+    margin-bottom: 15px;
+}

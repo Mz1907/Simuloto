@@ -455,6 +455,7 @@ function replaceChanceValue() {
     })
 }
 
+
 $(function () {
     //replaceChanceValue();
     /** form submit prevent default (it uses ajax to send data) **/
@@ -463,10 +464,19 @@ $(function () {
             return false;
         }
     });
+    
+    /** adding class active on menu_left link **/
+    $('.linkLoto').addClass('active');
+    
+    /** slidetoggle of html table multipleModel when clicking on p.toggle_p **/
+    $('.toggle_p').click(function(){
+        $('#multipleGrid').slideToggle();
+    })
+    
+    
     /** using http://www.bootstraptoggle.com/ **/
     var countBalls = 0; // how many balls are selected by user (min 6, max 10)
     var countChance = 0;
-
 
     var minBalls = 5; // user must select min 6 balls
     var maxBalls = 10; // user must select max 10 balls

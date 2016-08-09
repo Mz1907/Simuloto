@@ -2,100 +2,39 @@
 
 {% block content %}
 
-<!-- Page Content -->
-        <div class="container">
+    <!-- Page Content -->
+    <div class="container">
 
-            <div class="row">
+        <div class="row">
 
-                <div class="col-md-3">
-                    <p class="lead">Shop Name</p>
-                    <div class="list-group">
-                        <a href="#" class="list-group-item active">Category 1</a>
-                        <a href="#" class="list-group-item">Category 2</a>
-                        <a href="#" class="list-group-item">Category 3</a>
+            {% include ':default:menu_left.html.twig' %}
+
+            <div class="col-md-9">
+
+                <div class="thumbnail">
+                    <div class="caption-full">
+                        <h1><a href="#">Faq Simuloto</a></h1>
+                        <h4>Principes d&rsquo;une simulation de loterie</h4>
+                        <p>Une simulation de loterie consiste &agrave; simuler la loterie de votre choix. La simulation tente d&rsquo;imiter au mieux le principe du jeu r&eacute;el. Faire une simulation en ligne vous permet de vous faire une id&eacute;e pratique des probabilit&eacute;s de chance de gagner &agrave; la loterie r&eacute;elle.</p>
+
+                        <h4>Comment effectuer une simulation?</h4>
+                        <p>Pour effectuer une simulation, il suffit de cocher un nombre suffisant de num&eacute;ros et de cliquer sur le bouton &laquo; simuler &raquo; pour effectuer la simulation.</p>
+                        
+                        <h4>Comment voir les r&eacute;sultats de la simulation ?</h4>
+                        <p>Apr&egrave;s avoir cliqu&eacute; sur le bouton &laquo; simuler &raquo;, le r&eacute;sultat de la simulation est visible dans un tableau situ&eacute; en dessous de la grille de jeu. Il est possible de voir chaque tirage de la simulation en d&eacute;tail en cliquant sur le bouton &laquo; voir d&eacute;tails &raquo;.</p>
+
+                        <h4>R&egrave;gles simulation</h4>
+                        <p>Une simulation consiste &agrave; choisir un nombre minimum de num&eacute;ros et de lancer le jeu. Si vous d&eacute;sirez jouer une grille multiple, il vous faudra respecter le mod&egrave;le d&rsquo;une grille multiple de la simulation que vous souhaitez effectuer.</p>
+
+                        <h4>Qu&rsquo;y a t-il &agrave; gagner en effectuant une simulation ?</h4>
+                        <p>Absolument rien si ce n&rsquo;est le plaisir de simuler le jeu. Simuloto est une application gratuite de simulateur de loterie. Si vous souhaitez jouer en ligne &agrave; la loterie de votre choix, et &ecirc;tre r&eacute;tribu&eacute; par des gains r&eacute;els, il faut vous rendre sur le site officiel de la loterie de votre choix.</p>
                     </div>
-                </div>
-
-                <div class="col-md-9">
-
-                    <div class="thumbnail">
-                        <div class="caption-full">
-                            <h1><a href="#">À propos</a></h1>
-                            <p>Simuloto  est une application de simulation de loterie permettant d&rsquo;effectuer une simulation sans enjeu des loteries les plus connus comme Lotto Belgique, Euromillion.</p>
-                            <p>Aucune somme d&rsquo;argent n&rsquo;est &agrave; gagner. L&rsquo;application gratuite et cr&eacute;&eacute;e dans un but ludique.</p>
-  
-                            <strong><a href="">Some link</a>
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">3 reviews</p>
-                            <p>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                4.0 stars
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="well">
-
-                        <div class="text-right">
-                            <a class="btn btn-success">Leave a Review</a>
-                        </div>
-
-                        <hr>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                Anonymous
-                                <span class="pull-right">10 days ago</span>
-                                <p>This product was great in terms of quality. I would definitely buy another!</p>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                Anonymous
-                                <span class="pull-right">12 days ago</span>
-                                <p>I've alredy ordered another one!</p>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                Anonymous
-                                <span class="pull-right">15 days ago</span>
-                                <p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
-                            </div>
-                        </div>
-
-                    </div>
-
                 </div>
 
             </div>
 
         </div>
-   <!-- /.container -->
+
+    </div>
+    <!-- /.container -->
 {% endblock  %}

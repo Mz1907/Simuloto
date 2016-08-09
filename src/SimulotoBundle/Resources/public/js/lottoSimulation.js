@@ -275,6 +275,11 @@ $(function () {
             return false;
         }
     });
+    
+    /** adding class active on menu_left link **/
+    $('.linkLotto').addClass('active');
+    
+    
     /** using http://www.bootstraptoggle.com/ **/
     var countBalls = 0; // how many balls are selected by user (min 6, max 10)
     var minBalls = 6; // user must select min 6 balls

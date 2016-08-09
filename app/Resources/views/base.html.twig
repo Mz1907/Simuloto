@@ -13,7 +13,10 @@
 </head>
 
 <body>
+{% include ':default:facebookSDK.html.twig' %}
 
+{% block facebookComment %}{% endblock facebookComment %}
+    
 {% embed ':default:navigation.html.twig ' %}{% endembed %}
 
 {% block content %}{% endblock content %}
