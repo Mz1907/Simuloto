@@ -1,13 +1,9 @@
 <!-- Bootstrap Core CSS -->
-{% stylesheets '@bootstrap_css' %}
+{% stylesheets 'bundles/simuloto/css/bootstrap.min.css' 'bundles/simuloto/css/shop-item.css' %}
 <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
 {% endstylesheets %}
 
 <!-- jquery and bootstrap.js -->
-{% javascripts '@jquery' '@bootstrap_js' %}
+{% javascripts 'bundles/simuloto/js/jquery.min.js' 'bundles/simuloto/js/bootstrap.min.js' %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
-
-{% stylesheets 'bundles/simuloto/css/shop-item.css' filter='cssrewrite'  %}
-    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-{% endstylesheets %}

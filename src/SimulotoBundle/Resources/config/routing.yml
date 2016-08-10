@@ -1,10 +1,6 @@
-simuloto_homepage:
-    path:     /
-    defaults: { _controller: SimulotoBundle:Default:showAbout }
-
 #LottoSimulation routes
 play_lotto_game:
-    path:     /playLotto
+    path:     /
     defaults: { _controller: SimulotoBundle:LottoSimulationForm:LottoSimulationForm}
         
 execute_lotto_simulation:

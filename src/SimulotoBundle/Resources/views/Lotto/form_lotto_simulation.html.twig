@@ -2,8 +2,8 @@
     {% form_theme form ':default:form_custom.html.twig' %}
     {{ form_start(form) }}
         {% for LottoItem in form.children %}
-            {% if loop.index == 7 or loop.index == 13 or loop.index == 19 or loop.index == 25
-                              or loop.index == 31 or loop.index == 37 or loop.index == 43
+            {% if loop.index == 6 or loop.index == 11 or loop.index == 16 or loop.index == 21
+                              or loop.index == 26 or loop.index == 31 or loop.index == 36 or loop.index == 41
                               and LottoItem.vars.id != 'form_Simuler' %}
                 <br />
             {% endif %}

@@ -76,11 +76,11 @@ assetic:
     assets:
         bootstrap_js:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/js/bootstrap.js
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/js/bootstrap.min..js
                 
         bootstrap_css:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap.css
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap.min.css
                 - %kernel.root_dir%/../vendor/twitter/bootstrap/dist/css/bootstrap-theme.css
             filters: [cssrewrite]
             
@@ -106,5 +106,5 @@ assetic:
             
         jquery:
             inputs:
-                - %kernel.root_dir%/../vendor/components/jquery/jquery.js
+                - %kernel.root_dir%/../vendor/components/jquery/jquery.min.js
 

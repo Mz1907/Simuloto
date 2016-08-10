@@ -1,22 +1,23 @@
-{# Attention les étoiles de l'euromillions s'affichent via la value de leur label  #}
-
+{{"<h4>Choisissez vos num&eacute;ros</h4>"}}
 {% if form is defined %}
     {% form_theme form ':default:form_custom.html.twig' %}
     {{ form_start(form) }}
         {% for LottoItem in form.children %}
-            {% if loop.index == 7 or loop.index == 13 or loop.index == 19 or loop.index == 25
-                              or loop.index == 31 or loop.index == 37 or loop.index == 43 
-                              or loop.index == 49
+            {% if loop.index == 6 or loop.index == 11 or loop.index == 16 or loop.index == 21
+                              or loop.index == 26 or loop.index == 31 or loop.index == 36 
+                              or loop.index == 41 or loop.index == 46 or loop.index == 55
                               and LottoItem.vars.id != 'form_Simuler' %}
                 <br />
             {% endif %}
             {% if loop.index is divisible by(50) and LottoItem.vars.id != 'form_Simuler' or loop.index == 60 %}
                 <br /><br />
+                {% if loop.index == 60 %}
+                    {{ form_label(LottoItem) }}
+                {% endif %}
                 {% if loop.index is divisible by(50) and LottoItem.vars.id != 'form_Simuler' %}
-                    {{"<h4>N&deg; chance</h4>"}}
+                {{"<h4>Choisissez le num&eacute;ro chance</h4>"}}
                 {% endif %}
             {% endif %}
-            
             {% if loop.index <= 50 or  LottoItem.vars.id != 'form_Simuler' or LottoItem.vars.id != 'form_Nombre_de_tirage'%}
                 {{form_row(LottoItem)}}
             {% endif %}
