@@ -245,6 +245,9 @@ function buildSimulationDetails(simulationDetails, countGames) {
 
             s += v + ' - ';
         });
+        if (goodBallsToParse.length == 0) {
+            s = '0-';
+        }
         // delete white aspace at the end
         s = s.trim();
         s = s.substr(0, s.length - 1);
@@ -264,22 +267,16 @@ function buildSimulationDetails(simulationDetails, countGames) {
 
 }
 
+function resetForm() {
+    $('#form_reset').each(function () {
+        $(this).toggle('off');
+    })
+}
 
 
 /** Execution **/
 
 $(function () {
-    /** form submit prevent default (it uses ajax to send data) **/
-    $('form').on({
-        submit: function () {
-            return false;
-        }
-    });
-    
-    /** adding class active on menu_left link **/
-    $('.linkLotto').addClass('active');
-    
-    
     /** using http://www.bootstraptoggle.com/ **/
     var countBalls = 0; // how many balls are selected by user (min 6, max 10)
     var minBalls = 6; // user must select min 6 balls
@@ -288,6 +285,50 @@ $(function () {
     var $allBalls = $('.ballsCheckBox'); // collection of Lotto balls
     var selectedBalls = []; // value of user's selected balls ex:[4, 17, 22, 29, 36, 45]
     var countGames;
+    window.executeOnchangeEventFlag = true;
+
+
+    /** form submit prevent default (it uses ajax to send data) **/
+    $('form').on({
+        submit: function () {
+            return false;
+        }
+    });
+
+    /**
+     * Implement onclick event on reset button
+     */
+    $('#form_Reset').on({
+        click: function () {
+
+
+            window.executeOnchangeEventFlag = false;
+
+            //enable any disabled balls.
+            enableDisabled($allBalls);
+
+            $(':checkbox').each(function (k, v) {
+
+                if ($(this).prop('checked')) {
+                    $(this).bootstrapToggle('toggle');
+                    $(this).removeAttr('checked');
+                }
+
+            })
+
+            //set counter to zero
+            countBalls = 0;
+            selectedBalls = [];
+            selectedBalls.length = 0;
+            countGames = 0;
+
+            window.executeOnchangeEventFlag = true;
+
+        }
+    })
+
+    /** adding class active on menu_left link **/
+    $('.linkLotto').addClass('active');
 
     /** balls config and style  **/
     $(':checkbox').each(function (k, v) {
@@ -304,41 +345,46 @@ $(function () {
     /** disable form submit button **/
     $('#form_Simuler').attr('disabled', true);
 
-    /** retrieves user selected balls **/
+
+
+
+
     $allBalls.each(function (k, v) {
         $(this).on({
             change: function () {
-                var ball = $(this).val();
-                //if ball already present in selectedBalls then remove it from that array
-                if ($.inArray(ball, selectedBalls) != -1) {
-                    $(this).attr('checked', false);
-                    selectedBalls.splice(selectedBalls.indexOf(ball), 1);
-                    countBalls--;
+                if (window.executeOnchangeEventFlag) {
+                    var ball = $(this).val();
+                    //if ball already present in selectedBalls then remove it from that array
+                    if ($.inArray(ball, selectedBalls) != -1) {
+                        $(this).attr('checked', false);
+                        selectedBalls.splice(selectedBalls.indexOf(ball), 1);
+                        countBalls--;
 
-                    window.console.log("selectedBalls.length = " + selectedBalls.length);
+                        window.console.log("selectedBalls.length = " + selectedBalls.length);
 
-                    if (selectedBalls.length == 9) {
-                        enableDisabled($allBalls);
-                        $("#form_Simuler").removeAttr('disabled');
-                    }
+                        if (selectedBalls.length == 9) {
+                            enableDisabled($allBalls);
+                            $("#form_Simuler").removeAttr('disabled');
+                        }
 
-                    if (selectedBalls.length == 5) {
-                        $("#form_Simuler").attr('disabled', true);
-                    }
+                        if (selectedBalls.length == 5) {
+                            $("#form_Simuler").attr('disabled', true);
+                        }
 
-                } else {
-                    //if ball not present in selectedBalls array
-                    $(this).attr('checked', true);
-                    selectedBalls.push(ball);
-                    countBalls++;
+                    } else {
+                        //if ball not present in selectedBalls array
+                        $(this).attr('checked', true);
+                        selectedBalls.push(ball);
+                        countBalls++;
 
-                    window.console.log("selectedBalls.length = " + selectedBalls.length);
+                        window.console.log("selectedBalls.length = " + selectedBalls.length);
 
-                    if (selectedBalls.length == 6) {
-                        $("#form_Simuler").removeAttr('disabled');
-                    }
-                    if (selectedBalls.length >= 10) {
-                        disableUnchecked($allBalls);
+                        if (selectedBalls.length == 6) {
+                            $("#form_Simuler").removeAttr('disabled');
+                        }
+                        if (selectedBalls.length >= 10) {
+                            disableUnchecked($allBalls);
+                        }
                     }
                 }
             }

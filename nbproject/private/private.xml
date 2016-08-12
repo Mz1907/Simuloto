@@ -6,26 +6,23 @@
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Repository/LottoSimulationRepository.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/tests/SimulotoBundle/SimulotteryTest.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Util/ISimulottery.php</file>
-            <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/css/bootstrap.css</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/js/lottoSimulation.js</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Util/TraitSimulottery.php</file>
-            <file>file:/C:/xampp/htdocs/Simuloto/web/app.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/config/routing.yml</file>
             <file>file:/C:/xampp/htdocs/Simuloto/app/Resources/views/base.html.twig</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Entity/LottoSimulation.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/css/styles.css</file>
-            <file>file:/C:/xampp/htdocs/Simuloto/app/config/config_prod.yml</file>
+            <file>file:/C:/xampp/htdocs/Simuloto/web/config.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/composer.json</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/SimulotoBundle.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/app/config/routing.yml</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Tests/Controller/LottoControllerTest.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Model/Simulottery.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/app/autoload.php</file>
-            <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/js/bootstrap.js</file>
+            <file>file:/C:/xampp/htdocs/Simuloto/web/app_dev.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Controller/LottoController.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/js/jquery.js</file>
             <file>file:/C:/xampp/htdocs/Simuloto/app/config/config.yml</file>
-            <file>file:/C:/xampp/htdocs/Simuloto/app/config/config_dev.yml</file>
             <file>file:/C:/xampp/htdocs/Simuloto/app/AppKernel.php</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Resources/public/css/bootstrap.min.css</file>
             <file>file:/C:/xampp/htdocs/Simuloto/src/SimulotoBundle/Controller/DefaultController.php</file>

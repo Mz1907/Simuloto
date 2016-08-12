@@ -117,7 +117,7 @@ function mustDisableBalls(ballsLength, chanceLength) {
             return true;
         }
     }
-    if(ballsLength >= 9){
+    if (ballsLength >= 9) {
         return true;
     }
     return false;
@@ -365,6 +365,9 @@ function buildSimulationDetails(simulationDetails, countGames) {
         $.each(goodBallsToParse, function (k, v) {
             s += v + ' - ';
         });
+        if (goodBallsToParse.length == 0) {
+            s = '0-';
+        }
         // delete white aspace at the end
         s = s.trim();
         s = s.substr(0, s.length - 1);
@@ -377,6 +380,9 @@ function buildSimulationDetails(simulationDetails, countGames) {
         $.each(goodChanceToParse, function (k, v) {
             s += v + ' - ';
         });
+        if (goodChanceToParse.length == 0) {
+            s = '0-';
+        }
         // delete white aspace at the end
         s = s.trim();
         s = s.substr(0, s.length - 1);
@@ -464,16 +470,50 @@ $(function () {
             return false;
         }
     });
-    
+
+    /**
+     * Implement onclick event on reset button
+     */
+    $('#form_Reset').on({
+        click: function () {
+
+            window.executeOnchangeEventFlag = false;
+
+            //enable any disabled balls.
+            enableDisabled($allBalls);
+
+            $(':checkbox').each(function (k, v) {
+
+                if ($(this).prop('checked')) {
+                    $(this).bootstrapToggle('toggle');
+                    $(this).removeAttr('checked');
+                }
+
+            })
+
+            //set counter to zero
+            countBalls = 0;
+            selectedBalls = [];
+
+            countChance = 0;
+            selectedChance = [];
+
+            countGames = 0;
+
+            window.executeOnchangeEventFlag = true;
+
+        }
+    })
+
     /** adding class active on menu_left link **/
     $('.linkLoto').addClass('active');
-    
+
     /** slidetoggle of html table multipleModel when clicking on p.toggle_p **/
-    $('.toggle_p').click(function(){
+    $('.toggle_p').click(function () {
         $('#multipleGrid').slideToggle();
     })
-    
-    
+
+
     /** using http://www.bootstraptoggle.com/ **/
     var countBalls = 0; // how many balls are selected by user (min 6, max 10)
     var countChance = 0;
@@ -491,6 +531,8 @@ $(function () {
     var selectedChance = [];
 
     var countGames;
+
+    window.executeOnchangeEventFlag = true;
 
     /** balls config and style  **/
     $(':checkbox').each(function (k, v) {
@@ -512,80 +554,82 @@ $(function () {
     $allBalls.each(function (k, v) {
         $(this).on({
             change: function () {
-                var ball = parseInt($(this).val());
-                //if ball already present in selectedBalls then remove it from that array
-                if ($.inArray(ball, selectedBalls) != -1) {
-                    $(this).attr('checked', false);
-                    selectedBalls.splice(selectedBalls.indexOf(ball), 1);
-                    countBalls--;
+                if (window.executeOnchangeEventFlag) {
+                    var ball = parseInt($(this).val());
+                    //if ball already present in selectedBalls then remove it from that array
+                    if ($.inArray(ball, selectedBalls) != -1) {
+                        $(this).attr('checked', false);
+                        selectedBalls.splice(selectedBalls.indexOf(ball), 1);
+                        countBalls--;
 
-                    window.console.log("selectedBalls.length = " + selectedBalls.length);
-                    window.console.log("selectedChance.length = " + selectedChance.length);
+                        window.console.log("selectedBalls.length = " + selectedBalls.length);
+                        window.console.log("selectedChance.length = " + selectedChance.length);
 
-                     /** testing disable balls **/
-                    var test = mustDisableBalls(selectedBalls.length, selectedChance.length);
-                    window.console.log(test);
+                        /** testing disable balls **/
+                        var test = mustDisableBalls(selectedBalls.length, selectedChance.length);
+                        window.console.log(test);
 
-                    if (mustDisableBalls(selectedBalls.length, selectedChance.length)) {
-                        disableUnchecked($allBalls);
-                        window.console.log("oui1A");
+                        if (mustDisableBalls(selectedBalls.length, selectedChance.length)) {
+                            disableUnchecked($allBalls);
+                            window.console.log("oui1A");
 
-                    } else {
-                        enableDisabled($allBalls);
-                        window.console.log("eeeee");
-                    }
-                    if (mustDisableChance(selectedBalls.length, selectedChance.length)) {
-                        disableUnchecked($allChance);
-                        window.console.log("oui1A");
+                        } else {
+                            enableDisabled($allBalls);
+                            window.console.log("eeeee");
+                        }
+                        if (mustDisableChance(selectedBalls.length, selectedChance.length)) {
+                            disableUnchecked($allChance);
+                            window.console.log("oui1A");
 
-                    } else {
-                        enableDisabled($allChance);
-                    }
+                        } else {
+                            enableDisabled($allChance);
+                        }
 
-                    if (enableSubmit(selectedBalls.length, selectedChance.length)) {
-                        window.console.log("enable sumbit 2 !");
-                        $("#form_Simuler").removeAttr('disabled');
-                    } else {
-                        $("#form_Simuler").attr('disabled', true);
-                    }
-
-                } else {
-                                        //if ball not present in selectedBalls array
-                    $(this).attr('checked', true);
-                    selectedBalls.push(parseInt(ball));
-                    countBalls++;
-
-                    window.console.log("selectedBalls.length = " + selectedBalls.length);
-                    window.console.log("selectedChance.length = " + selectedChance.length);
-
-                    /** testing disable balls **/
-                    var test = mustDisableBalls(selectedBalls.length, selectedChance.length);
-                    window.console.log(test);
-                    
-                    if (mustDisableBalls(selectedBalls.length, selectedChance.length)) {
-                        disableUnchecked($allBalls);
-                        window.console.log("oui1");
+                        if (enableSubmit(selectedBalls.length, selectedChance.length)) {
+                            window.console.log("enable sumbit 2 !");
+                            $("#form_Simuler").removeAttr('disabled');
+                        } else {
+                            $("#form_Simuler").attr('disabled', true);
+                        }
 
                     } else {
-                        enableDisabled($allBalls);
-                        window.console.log('rrrr');
-                    }
+                        //if ball not present in selectedBalls array
+                        $(this).attr('checked', true);
+                        selectedBalls.push(parseInt(ball));
+                        countBalls++;
 
-                    /** testing disable stars **/
-                    if (mustDisableChance(selectedBalls.length, selectedChance.length)) {
-                        disableUnchecked($allChance);
-                        window.console.log("oui2");
-                    } else {
-                        enableDisabled($allChance);
-                        window.console.log('aaaa');
-                    }
+                        window.console.log("selectedBalls.length = " + selectedBalls.length);
+                        window.console.log("selectedChance.length = " + selectedChance.length);
 
-                    /** testing disable submit button **/
-                    if (enableSubmit(selectedBalls.length, selectedChance.length)) {
-                        window.console.log("bbbb");
-                        $("#form_Simuler").removeAttr('disabled');
-                    } else {
-                        $("#form_Simuler").attr('disabled', true);
+                        /** testing disable balls **/
+                        var test = mustDisableBalls(selectedBalls.length, selectedChance.length);
+                        window.console.log(test);
+
+                        if (mustDisableBalls(selectedBalls.length, selectedChance.length)) {
+                            disableUnchecked($allBalls);
+                            window.console.log("oui1");
+
+                        } else {
+                            enableDisabled($allBalls);
+                            window.console.log('rrrr');
+                        }
+
+                        /** testing disable stars **/
+                        if (mustDisableChance(selectedBalls.length, selectedChance.length)) {
+                            disableUnchecked($allChance);
+                            window.console.log("oui2");
+                        } else {
+                            enableDisabled($allChance);
+                            window.console.log('aaaa');
+                        }
+
+                        /** testing disable submit button **/
+                        if (enableSubmit(selectedBalls.length, selectedChance.length)) {
+                            window.console.log("bbbb");
+                            $("#form_Simuler").removeAttr('disabled');
+                        } else {
+                            $("#form_Simuler").attr('disabled', true);
+                        }
                     }
                 }
             }
@@ -596,85 +640,87 @@ $(function () {
     $allChance.each(function (k, v) {
         $(this).on({
             change: function () {
-                var chance = $(this).val();
-                chance = convertChanceValue(chance);
+                if (window.executeOnchangeEventFlag) {
+                    var chance = $(this).val();
+                    chance = convertChanceValue(chance);
 
-                //if ball already present in selectedBalls then remove it from that array
-                if ($.inArray(chance, selectedChance) != -1) {
-                    $(this).attr('checked', false);
-                    selectedChance.splice(selectedChance.indexOf(chance), 1);
-                    countChance--;
+                    //if ball already present in selectedBalls then remove it from that array
+                    if ($.inArray(chance, selectedChance) != -1) {
+                        $(this).attr('checked', false);
+                        selectedChance.splice(selectedChance.indexOf(chance), 1);
+                        countChance--;
 
-                    window.console.log("selectedBalls.length = " + selectedBalls.length);
-                    window.console.log("selectedChance.length = " + selectedChance.length);
+                        window.console.log("selectedBalls.length = " + selectedBalls.length);
+                        window.console.log("selectedChance.length = " + selectedChance.length);
 
-                                       /** testing disable balls **/
-                    var test = mustDisableBalls(selectedBalls.length, selectedChance.length);
-                    window.console.log(test);
+                        /** testing disable balls **/
+                        var test = mustDisableBalls(selectedBalls.length, selectedChance.length);
+                        window.console.log(test);
 
-                    /** testing disable balls **/
-                    if (mustDisableBalls(selectedBalls.length, selectedChance.length)) {
-                        disableUnchecked($allBalls);
-                        window.console.log("oui3");
+                        /** testing disable balls **/
+                        if (mustDisableBalls(selectedBalls.length, selectedChance.length)) {
+                            disableUnchecked($allBalls);
+                            window.console.log("oui3");
 
-                    } else {
-                        enableDisabled($allBalls);
-                    }
+                        } else {
+                            enableDisabled($allBalls);
+                        }
 
-                    /** testing disable stars **/
-                    if (mustDisableChance(selectedBalls.length, selectedChance.length)) {
-                        disableUnchecked($allChance);
-                        window.console.log("oui4");
-                    } else {
-                        enableDisabled($allChance);
-                    }
+                        /** testing disable stars **/
+                        if (mustDisableChance(selectedBalls.length, selectedChance.length)) {
+                            disableUnchecked($allChance);
+                            window.console.log("oui4");
+                        } else {
+                            enableDisabled($allChance);
+                        }
 
-                    /** testing disable submit button **/
-                    if (enableSubmit(selectedBalls.length, selectedChance.length)) {
-                        window.console.log("oui5");
-                        $("#form_Simuler").removeAttr('disabled');
-                    } else {
-                        $("#form_Simuler").attr('disabled', true);
-                    }
-
-                } else {
-                    //if ball not present in selectedBalls array
-                    $(this).attr('checked', true);
-                    selectedChance.push(parseInt(chance));
-                    countChance++;
-
-                    window.console.log("selectedBalls.length = " + selectedBalls.length);
-                    window.console.log("selectedChance.length = " + selectedChance.length);
-                    
-                    /** testing disable balls **/
-                    var test = mustDisableBalls(selectedBalls.length, selectedChance.length);
-                    window.console.log(test);
-
-                    /** testing disable balls **/
-                    if (mustDisableBalls(selectedBalls.length, selectedChance.length)) {
-                        disableUnchecked($allBalls);
-                        window.console.log("oui6");
+                        /** testing disable submit button **/
+                        if (enableSubmit(selectedBalls.length, selectedChance.length)) {
+                            window.console.log("oui5");
+                            $("#form_Simuler").removeAttr('disabled');
+                        } else {
+                            $("#form_Simuler").attr('disabled', true);
+                        }
 
                     } else {
-                        enableDisabled($allBalls);
-                    }
+                        //if ball not present in selectedBalls array
+                        $(this).attr('checked', true);
+                        selectedChance.push(parseInt(chance));
+                        countChance++;
 
-                    /** testing disable stars **/
-                    if (mustDisableChance(selectedBalls.length, selectedChance.length)) {
-                        disableUnchecked($allChance);
-                        window.console.log("oui7");
-                    } else {
-                        enableDisabled($allChance);
-                    }
+                        window.console.log("selectedBalls.length = " + selectedBalls.length);
+                        window.console.log("selectedChance.length = " + selectedChance.length);
 
-                    /** testing disable submit button **/
-                    if (enableSubmit(selectedBalls.length, selectedChance.length)) {
-                        window.console.log("oui8");
-                        $("#form_Simuler").removeAttr('disabled');
-                    } else {
-                        $("#form_Simuler").attr('disabled', true);
-                    }
+                        /** testing disable balls **/
+                        var test = mustDisableBalls(selectedBalls.length, selectedChance.length);
+                        window.console.log(test);
 
+                        /** testing disable balls **/
+                        if (mustDisableBalls(selectedBalls.length, selectedChance.length)) {
+                            disableUnchecked($allBalls);
+                            window.console.log("oui6");
+
+                        } else {
+                            enableDisabled($allBalls);
+                        }
+
+                        /** testing disable stars **/
+                        if (mustDisableChance(selectedBalls.length, selectedChance.length)) {
+                            disableUnchecked($allChance);
+                            window.console.log("oui7");
+                        } else {
+                            enableDisabled($allChance);
+                        }
+
+                        /** testing disable submit button **/
+                        if (enableSubmit(selectedBalls.length, selectedChance.length)) {
+                            window.console.log("oui8");
+                            $("#form_Simuler").removeAttr('disabled');
+                        } else {
+                            $("#form_Simuler").attr('disabled', true);
+                        }
+
+                    }
                 }
             }
         })
@@ -684,10 +730,10 @@ $(function () {
     $('#form_Simuler').on({
         click: function (e) {
             e.preventDefault();
-            countGames = $('#form_Nombre_de_tirages').val();
             window.console.log('ok japan !');
-            if (countBalls >= 5 && countBalls <= 10 && countChance >= 2) {
+            if (countBalls >= 5 && countBalls <= 10 && countChance >= 1) {
                 window.console.log('ok usa !');
+                countGames = $('#form_Nombre_de_tirages').val();
                 window.console.log(countGames);
                 window.console.log(selectedBalls);
                 window.console.log(selectedChance);

@@ -7,6 +7,8 @@ use SimulotoBundle\Entity\EuromillionsSimulation;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+
 
 /**
  * Description of EuromillionsSimulationFormController
@@ -27,11 +29,10 @@ class EuromillionsSimulationFormController extends Controller
         /** building Euromillions BALLS grid with checkboxes * */
         for ($i = 1; $i <= ($eur->getMaxNb() + $eur->getMaxStars()); $i++)
         {
-            if($i <= 50)
+            if ($i <= 50)
             {
                 $class = 'ballsCheckBox';
-            }
-            elseif($i >= 51 && $i <= 62)
+            } elseif ($i >= 51 && $i <= 62)
             {
                 $class = 'starsCheckBox';
             }
@@ -67,6 +68,13 @@ class EuromillionsSimulationFormController extends Controller
         $formBuilder->add('Simuler', SubmitType::class, [
             'attr' => [
                 'class' => 'save btn btn-success'
+            ]
+        ]);
+
+        /** adding button reset * */
+        $formBuilder->add('Reset', ResetType::class, [
+            'attr' => [
+                'class' => 'btn btn-warning'
             ]
         ]);
 

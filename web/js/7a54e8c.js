@@ -289,6 +289,9 @@ function buildSimulationDetails(simulationDetails, countGames) {
         $.each(goodBallsToParse, function (k, v) {
             s += v + ' - ';
         });
+        if (goodBallsToParse.length == 0) {
+            s = '0-';
+        }
         // delete white aspace at the end
         s = s.trim();
         s = s.substr(0, s.length - 1);
@@ -301,6 +304,9 @@ function buildSimulationDetails(simulationDetails, countGames) {
         $.each(goodStarsToParse, function (k, v) {
             s += v + ' - ';
         });
+        if (goodStarsToParse.length == 0) {
+            s = '0-';
+        }
         // delete white aspace at the end
         s = s.trim();
         s = s.substr(0, s.length - 1);
@@ -387,7 +393,7 @@ function replaceStarsValue() {
  * @returns {boolean}
  */
 function mustDisableBalls(ballsLength, starsLength) {
-    
+
 
     if (starsLength <= 3) {
         if (ballsLength >= 10) {
@@ -474,22 +480,7 @@ function enableSubmit(ballsLength, starsLength) {
 
 
 $(function () {
-    //replaceStarsValue();
-    /** form submit prevent default (it uses ajax to send data) **/
-    $('form').on({
-        submit: function () {
-            return false;
-        }
-    });
-    
-    /** adding class active on menu_left link **/
-    $('.linkEuromillions').addClass('active');
-    
-    /** slidetoggle of html table multipleModel when clicking on p.toggle_p **/
-    $('.toggle_p').click(function(){
-        $('#multipleGrid').slideToggle();
-    })
-    
+
     /** using http://www.bootstraptoggle.com/ **/
     var countBalls = 0; // how many balls are selected by user (min 6, max 10)
     var countStars = 0;
@@ -507,7 +498,60 @@ $(function () {
     var selectedBalls = []; // value of user's selected balls ex:[4, 17, 22, 29, 36, 45]
     var selectedStars = [];
 
+    window.executeOnchangeEventFlag = true;
+
     var countGames;
+
+    //replaceStarsValue();
+    /** form submit prevent default (it uses ajax to send data) **/
+    $('form').on({
+        submit: function () {
+            return false;
+        }
+    });
+
+    /**
+     * Implement onclick event on reset button
+     */
+    $('#form_Reset').on({
+        click: function () {
+
+            window.executeOnchangeEventFlag = false;
+
+            //enable any disabled balls.
+            enableDisabled($allBalls);
+
+            $(':checkbox').each(function (k, v) {
+
+                if ($(this).prop('checked')) {
+                    $(this).bootstrapToggle('toggle');
+                    $(this).removeAttr('checked');
+                }
+
+            })
+
+            //set counter to zero
+            countBalls = 0;
+            selectedBalls = [];
+
+            countChance = 0;
+            selectedChance = [];
+
+            countGames = 0;
+
+            window.executeOnchangeEventFlag = true;
+
+        }
+    })
+
+
+    /** adding class active on menu_left link **/
+    $('.linkEuromillions').addClass('active');
+
+    /** slidetoggle of html table multipleModel when clicking on p.toggle_p **/
+    $('.toggle_p').click(function () {
+        $('#multipleGrid').slideToggle();
+    })
 
     /** balls config and style  **/
     $(':checkbox').each(function (k, v) {
@@ -529,82 +573,84 @@ $(function () {
     $allBalls.each(function (k, v) {
         $(this).on({
             change: function () {
-                var ball = parseInt($(this).val());
-                //if ball already present in selectedBalls then remove it from that array
-                if ($.inArray(ball, selectedBalls) != -1) {
-                    $(this).attr('checked', false);
-                    selectedBalls.splice(selectedBalls.indexOf(ball), 1);
-                    countBalls--;
+                if (window.executeOnchangeEventFlag) {
+                    var ball = parseInt($(this).val());
+                    //if ball already present in selectedBalls then remove it from that array
+                    if ($.inArray(ball, selectedBalls) != -1) {
+                        $(this).attr('checked', false);
+                        selectedBalls.splice(selectedBalls.indexOf(ball), 1);
+                        countBalls--;
 
-                    window.console.log("selectedBalls.length = " + selectedBalls.length);
-                    window.console.log("selectedStars.length = " + selectedStars.length);
-                    
-                    /** testing disable balls **/
-                    var test = mustDisableBalls(selectedBalls.length, selectedStars.length);
-                    window.console.log(test);
+                        window.console.log("selectedBalls.length = " + selectedBalls.length);
+                        window.console.log("selectedStars.length = " + selectedStars.length);
 
-                    if (mustDisableBalls(selectedBalls.length, selectedStars.length)) {
-                        disableUnchecked($allBalls);
-                        window.console.log("oui1A");
+                        /** testing disable balls **/
+                        var test = mustDisableBalls(selectedBalls.length, selectedStars.length);
+                        window.console.log(test);
 
-                    } else {
-                        enableDisabled($allBalls);
-                        window.console.log("eeeee");
-                    }
-                    if (mustDisableStars(selectedBalls.length, selectedStars.length)) {
-                        disableUnchecked($allStars);
-                        window.console.log("oui1A");
+                        if (mustDisableBalls(selectedBalls.length, selectedStars.length)) {
+                            disableUnchecked($allBalls);
+                            window.console.log("oui1A");
 
-                    } else {
-                        enableDisabled($allStars);
-                    }
+                        } else {
+                            enableDisabled($allBalls);
+                            window.console.log("eeeee");
+                        }
+                        if (mustDisableStars(selectedBalls.length, selectedStars.length)) {
+                            disableUnchecked($allStars);
+                            window.console.log("oui1A");
 
-                    if (enableSubmit(selectedBalls.length, selectedStars.length)) {
-                        window.console.log("enable sumbit 2 !");
-                        $("#form_Simuler").removeAttr('disabled');
-                    } else {
-                        $("#form_Simuler").attr('disabled', true);
-                    }
+                        } else {
+                            enableDisabled($allStars);
+                        }
 
-                } else {
-                    //if ball not present in selectedBalls array
-                    $(this).attr('checked', true);
-                    selectedBalls.push(parseInt(ball));
-                    countBalls++;
-
-                    window.console.log("selectedBalls.length = " + selectedBalls.length);
-                    window.console.log("selectedStars.length = " + selectedStars.length);
-
-                    /** testing disable balls **/
-                    var test = mustDisableBalls(selectedBalls.length, selectedStars.length);
-                    window.console.log(test);
-                    
-                    if (mustDisableBalls(selectedBalls.length, selectedStars.length)) {
-                        disableUnchecked($allBalls);
-                        window.console.log("oui1");
+                        if (enableSubmit(selectedBalls.length, selectedStars.length)) {
+                            window.console.log("enable sumbit 2 !");
+                            $("#form_Simuler").removeAttr('disabled');
+                        } else {
+                            $("#form_Simuler").attr('disabled', true);
+                        }
 
                     } else {
-                        enableDisabled($allBalls);
-                        window.console.log('rrrr');
-                    }
+                        //if ball not present in selectedBalls array
+                        $(this).attr('checked', true);
+                        selectedBalls.push(parseInt(ball));
+                        countBalls++;
 
-                    /** testing disable stars **/
-                    if (mustDisableStars(selectedBalls.length, selectedStars.length)) {
-                        disableUnchecked($allStars);
-                        window.console.log("oui2");
-                    } else {
-                        enableDisabled($allStars);
-                        window.console.log('aaaa');
-                    }
+                        window.console.log("selectedBalls.length = " + selectedBalls.length);
+                        window.console.log("selectedStars.length = " + selectedStars.length);
 
-                    /** testing disable submit button **/
-                    if (enableSubmit(selectedBalls.length, selectedStars.length)) {
-                        window.console.log("bbbb");
-                        $("#form_Simuler").removeAttr('disabled');
-                    } else {
-                        $("#form_Simuler").attr('disabled', true);
-                    }
+                        /** testing disable balls **/
+                        var test = mustDisableBalls(selectedBalls.length, selectedStars.length);
+                        window.console.log(test);
 
+                        if (mustDisableBalls(selectedBalls.length, selectedStars.length)) {
+                            disableUnchecked($allBalls);
+                            window.console.log("oui1");
+
+                        } else {
+                            enableDisabled($allBalls);
+                            window.console.log('rrrr');
+                        }
+
+                        /** testing disable stars **/
+                        if (mustDisableStars(selectedBalls.length, selectedStars.length)) {
+                            disableUnchecked($allStars);
+                            window.console.log("oui2");
+                        } else {
+                            enableDisabled($allStars);
+                            window.console.log('aaaa');
+                        }
+
+                        /** testing disable submit button **/
+                        if (enableSubmit(selectedBalls.length, selectedStars.length)) {
+                            window.console.log("bbbb");
+                            $("#form_Simuler").removeAttr('disabled');
+                        } else {
+                            $("#form_Simuler").attr('disabled', true);
+                        }
+
+                    }
                 }
             }
         })
@@ -614,85 +660,89 @@ $(function () {
     $allStars.each(function (k, v) {
         $(this).on({
             change: function () {
-                var star = $(this).val();
-                star = convertStarsValue(star);
 
-                //if ball already present in selectedBalls then remove it from that array
-                if ($.inArray(star, selectedStars) != -1) {
-                    $(this).attr('checked', false);
-                    selectedStars.splice(selectedStars.indexOf(star), 1);
-                    countStars--;
+                if (window.executeOnchangeEventFlag) {
 
-                    window.console.log("selectedBalls.length = " + selectedBalls.length);
-                    window.console.log("selectedStars.length = " + selectedStars.length);
-                    
-                    /** testing disable balls **/
-                    var test = mustDisableBalls(selectedBalls.length, selectedStars.length);
-                    window.console.log(test);
+                    var star = $(this).val();
+                    star = convertStarsValue(star);
 
-                    /** testing disable balls **/
-                    if (mustDisableBalls(selectedBalls.length, selectedStars.length)) {
-                        disableUnchecked($allBalls);
-                        window.console.log("oui3");
+                    //if ball already present in selectedBalls then remove it from that array
+                    if ($.inArray(star, selectedStars) != -1) {
+                        $(this).attr('checked', false);
+                        selectedStars.splice(selectedStars.indexOf(star), 1);
+                        countStars--;
 
-                    } else {
-                        enableDisabled($allBalls);
-                    }
+                        window.console.log("selectedBalls.length = " + selectedBalls.length);
+                        window.console.log("selectedStars.length = " + selectedStars.length);
 
-                    /** testing disable stars **/
-                    if (mustDisableStars(selectedBalls.length, selectedStars.length)) {
-                        disableUnchecked($allStars);
-                        window.console.log("oui4");
-                    } else {
-                        enableDisabled($allStars);
-                    }
+                        /** testing disable balls **/
+                        var test = mustDisableBalls(selectedBalls.length, selectedStars.length);
+                        window.console.log(test);
 
-                    /** testing disable submit button **/
-                    if (enableSubmit(selectedBalls.length, selectedStars.length)) {
-                        window.console.log("oui5");
-                        $("#form_Simuler").removeAttr('disabled');
-                    } else {
-                        $("#form_Simuler").attr('disabled', true);
-                    }
+                        /** testing disable balls **/
+                        if (mustDisableBalls(selectedBalls.length, selectedStars.length)) {
+                            disableUnchecked($allBalls);
+                            window.console.log("oui3");
 
-                } else {
-                    //if ball not present in selectedBalls array
-                    $(this).attr('checked', true);
-                    selectedStars.push(parseInt(star));
-                    countStars++;
+                        } else {
+                            enableDisabled($allBalls);
+                        }
 
-                    window.console.log("selectedBalls.length = " + selectedBalls.length);
-                    window.console.log("selectedStars.length = " + selectedStars.length);
-                    
-                    /** testing disable balls **/
-                    var test = mustDisableBalls(selectedBalls.length, selectedStars.length);
-                    window.console.log(test);
+                        /** testing disable stars **/
+                        if (mustDisableStars(selectedBalls.length, selectedStars.length)) {
+                            disableUnchecked($allStars);
+                            window.console.log("oui4");
+                        } else {
+                            enableDisabled($allStars);
+                        }
 
-                    /** testing disable balls **/
-                    if (mustDisableBalls(selectedBalls.length, selectedStars.length)) {
-                        disableUnchecked($allBalls);
-                        window.console.log("oui6");
+                        /** testing disable submit button **/
+                        if (enableSubmit(selectedBalls.length, selectedStars.length)) {
+                            window.console.log("oui5");
+                            $("#form_Simuler").removeAttr('disabled');
+                        } else {
+                            $("#form_Simuler").attr('disabled', true);
+                        }
 
                     } else {
-                        enableDisabled($allBalls);
-                    }
+                        //if ball not present in selectedBalls array
+                        $(this).attr('checked', true);
+                        selectedStars.push(parseInt(star));
+                        countStars++;
 
-                    /** testing disable stars **/
-                    if (mustDisableStars(selectedBalls.length, selectedStars.length)) {
-                        disableUnchecked($allStars);
-                        window.console.log("oui7");
-                    } else {
-                        enableDisabled($allStars);
-                    }
+                        window.console.log("selectedBalls.length = " + selectedBalls.length);
+                        window.console.log("selectedStars.length = " + selectedStars.length);
 
-                    /** testing disable submit button **/
-                    if (enableSubmit(selectedBalls.length, selectedStars.length)) {
-                        window.console.log("oui8");
-                        $("#form_Simuler").removeAttr('disabled');
-                    } else {
-                        $("#form_Simuler").attr('disabled', true);
-                    }
+                        /** testing disable balls **/
+                        var test = mustDisableBalls(selectedBalls.length, selectedStars.length);
+                        window.console.log(test);
 
+                        /** testing disable balls **/
+                        if (mustDisableBalls(selectedBalls.length, selectedStars.length)) {
+                            disableUnchecked($allBalls);
+                            window.console.log("oui6");
+
+                        } else {
+                            enableDisabled($allBalls);
+                        }
+
+                        /** testing disable stars **/
+                        if (mustDisableStars(selectedBalls.length, selectedStars.length)) {
+                            disableUnchecked($allStars);
+                            window.console.log("oui7");
+                        } else {
+                            enableDisabled($allStars);
+                        }
+
+                        /** testing disable submit button **/
+                        if (enableSubmit(selectedBalls.length, selectedStars.length)) {
+                            window.console.log("oui8");
+                            $("#form_Simuler").removeAttr('disabled');
+                        } else {
+                            $("#form_Simuler").attr('disabled', true);
+                        }
+
+                    }
                 }
             }
         })

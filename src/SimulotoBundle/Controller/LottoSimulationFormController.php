@@ -7,6 +7,7 @@ use SimulotoBundle\Entity\LottoSimulation;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 
 /**
  * Description of FormBuilderController
@@ -59,7 +60,15 @@ class LottoSimulationFormController extends Controller
                 'class' => 'save btn btn-success'
             ]
         ]);
-
+        
+        /** adding button reset **/
+        $formBuilder->add('Reset', ResetType::class, [
+            'attr' => [
+                'class' => 'btn btn-warning'
+            ]
+        ]);
+        
+        
         $form = $formBuilder->getForm();
 
         return $this->render("SimulotoBundle:Lotto:content.html.twig", [

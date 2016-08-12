@@ -228,7 +228,7 @@ class LotoFrController extends Controller implements ISimulotteryController
             }
         } else
         {
-            $validation['message'] = 'Erreur: Vous devez selectionner minimum 5 chiffres et maximum 10 chiffres. Error 6';
+            $validation['message'] = 'Erreur: Vous devez selectionner minimum 5 chiffres et maximum 10 chiffres';
             return $validation;
         }
         /**
@@ -238,7 +238,7 @@ class LotoFrController extends Controller implements ISimulotteryController
          */
         $sizeArrChance = count($arrUChance);
 
-        if ($sizeArrChance > 1 && $sizeArrChance <= 10)
+        if ($sizeArrChance >= 1 && $sizeArrChance <= 10)
         {
 
             for ($i = 0; $i < $sizeArrChance; $i++)
@@ -251,7 +251,7 @@ class LotoFrController extends Controller implements ISimulotteryController
             }
         } else
         {
-            $validation['message'] = 'Vous devez selectionner minimum 1 &eacute;toile et maximum 11 &eacute;toiles. Error 8';
+            $validation['message'] = 'Vous devez selectionner minimum 1 numéros chance et maximum 1';
             return $validation;
         }
         

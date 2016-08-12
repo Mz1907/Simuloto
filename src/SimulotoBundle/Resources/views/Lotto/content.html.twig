@@ -22,15 +22,15 @@
 
     {# code for plugn Facebook comment #}
     {% block facebookComment %}
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.7&appId=1227263770649507";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.7&appId=1227263770649507";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    </script>
     {% endblock %}
 
     <div class="container">
@@ -42,7 +42,7 @@
                 <div class="thumbnail">
                     <div class="caption-full">
                         <h1>Simulation lotto Belgique</h1>
-                        <h4 class="pull-right">Cochez minimum 6 chiffres (maximum 10 chiffres)</h4>
+                        <div class="pull-right">Cochez minimum 6 chiffres (maximum 10 chiffres)</div>
 
                         {% include 'SimulotoBundle:Lotto:form_lotto_simulation.html.twig' %}
 
