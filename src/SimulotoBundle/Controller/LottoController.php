@@ -58,7 +58,7 @@ class LottoController extends Controller implements ISimulotteryController
                     $goodBalls = $this->goodBalls($uNumbers[$j], $lt->getDraw());
                     $lt->setGoodBalls($goodBalls);
                     
-                    $hasComp = $this->hasComp($lt);
+                    $hasComp = $this->hasCompAction($lt);
                     $lt->setHasComp($hasComp);
                     
                     $score = $this->buildScoreAction($lt);
@@ -101,7 +101,7 @@ class LottoController extends Controller implements ISimulotteryController
      * 
      * @return array
      * **/
-    public function hasComp(LottoSimulation $lt)
+    public function hasCompAction(LottoSimulation $lt)
     {
         $goodBalls = $lt->getGoodBalls();
 

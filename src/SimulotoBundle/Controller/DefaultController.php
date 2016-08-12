@@ -159,7 +159,7 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function testValidAction2()
+    public function test2ValidAction()
     {
 
         $arrAllTests = [];
