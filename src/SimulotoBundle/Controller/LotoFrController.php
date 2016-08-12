@@ -32,7 +32,7 @@ class LotoFrController extends Controller implements ISimulotteryController
         $uChance = $request->request->get('uChance');
         $countGames = $request->request->get('countGames');
 
-        $validation = $this->isContentValid($uNumbers, $uChance, $countGames);
+        $validation = $this->isContentValidAction($uNumbers, $uChance, $countGames);
 
         $isValid = $validation['isValide'];
 
@@ -169,7 +169,7 @@ class LotoFrController extends Controller implements ISimulotteryController
      *
      * @return array
      * * */
-    public function isContentValid(array $arrUNumbers, array $arrUChance, $countGames)
+    public function isContentValidAction(array $arrUNumbers, array $arrUChance, $countGames)
     {
 
         $validation = [

@@ -32,7 +32,7 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
         $uStars = $request->request->get('uStars');
         $countGames = $request->request->get('countGames');
 
-        $validation = $this->isContentValid($uNumbers, $uStars, $countGames);
+        $validation = $this->isContentValidAction($uNumbers, $uStars, $countGames);
 
         $isValid = $validation['isValide'];
 
@@ -183,7 +183,7 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
      *
      * @return array
      * * */
-    public function isContentValid(array $arrUNumbers, array $arrUStars, $countGames)
+    public function isContentValidAction(array $arrUNumbers, array $arrUStars, $countGames)
     {
         /** 
          * 1. Testing countGames 
