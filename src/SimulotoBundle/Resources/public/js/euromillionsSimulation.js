@@ -30,7 +30,6 @@ function sendUNumbers(uNumbers, uStars, countGames) {
                         $('#score').append($htmlTable);
 
                         /**  build Html Table details simulation   **/
-                        //TODO attach it to the dom: create <div> after div#score
                         var $htmlTableDetails = buildSimulationDetails(simulationDetails, countGames);
 
                         $('#scoreDetails').append('<button id="p_details" class="btn btn-primary">Afficher les tirages</button>');
