@@ -4,57 +4,62 @@
  * @param countGames array: count how many draw simulation has to do
  **/
 
-function sendUNumbers(uNumbers, uStars, countGames) {
+function sendUNumbers(selectedBalls, selectedStars, countGames) {
 
-    /** creating ajax request **/
     var url = Routing.generate('execute_euromillions_simulation');
+    /** creating ajax request **/
+    $.ajax({
+        url: url,
+        dataType: "json",
+        type: "POST",
+        data: {
+            'selectedBalls': selectedBalls,
+            'selectedStars': selectedStars,
+            'countGames': countGames
+        },
+        success: function (response) {
+            
+            window.console.log(response);
+            
+            if (response.validation.message == "none") {
+                var score = response.score;
+                var simulationDetails = response.arrSimulationDetails;
+                var countGames = response.countGames;
 
-    $.post(
-            url,
-            {uNumbers: uNumbers, uStars: uStars, countGames: countGames},
-            function (response) {
-                if (response.code == 100 && response.success) {
-                    window.console.log(response);
-                    if (response.validation.message == "none") {
-                        var score = response.score;
-                        var simulationDetails = response.arrSimulationDetails;
-                        var countGames = response.countGames;
+                /**  build HtmlTable score  **/
+                var $htmlTable = buildHtmlTable(score);
 
-                        /**  build HtmlTable score  **/
-                        var $htmlTable = buildHtmlTable(score);
+                /** empty previous content  **/
+                $('#score, #scoreDetails, #details').empty();
+                $('#p_details').remove();
 
-                        /** empty previous content  **/
-                        $('#score, #scoreDetails, #details').empty();
-                        $('#p_details').remove();
+                $('#score').append($htmlTable);
 
-                        $('#score').append($htmlTable);
+                /**  build Html Table details simulation   **/
+                var $htmlTableDetails = buildSimulationDetails(simulationDetails, countGames);
 
-                        /**  build Html Table details simulation   **/
-                        //TODO attach it to the dom: create <div> after div#score
-                        var $htmlTableDetails = buildSimulationDetails(simulationDetails, countGames);
-
-                        $('#scoreDetails').append('<button id="p_details" class="btn btn-primary">Afficher les tirages</button>');
-                        $('#p_details').on({
-                            click: function () {
-                                $('#details').slideToggle('normal', 'linear', function () {
-                                    $(this).append($htmlTableDetails);
-                                });
-                            }
-                        })
-                    } else {
-                        /** creating div alert error  **/
-
-                        if ($('.customAlert')) {
-                            $('.customAlert').remove();
-                        }
-                        var $div = $("<div>");
-                        $div.addClass('alert alert-danger customAlert').html('<strong>' + response.message + '<strong>');
-                        /** add div alert error to the dom **/
-                        $('#details').append($div);
+                $('#scoreDetails').append('<button id="p_details" class="btn btn-primary">Afficher les tirages</button>');
+                $('#p_details').on({
+                    click: function () {
+                        $('#details').slideToggle('normal', 'linear', function () {
+                            $(this).append($htmlTableDetails);
+                        });
                     }
-                }
+                })
+            } else {
+                /** creating div alert error  **/
 
-            }, 'json');
+                if ($('.customAlert')) {
+                    $('.customAlert').remove();
+                }
+                var $div = $("<div>");
+                $div.addClass('alert alert-danger customAlert').html('<strong>' + response.message + '<strong>');
+                /** add div alert error to the dom **/
+                $('#details').append($div);
+            } //dernier accolade à prendre
+        }
+    })
+
 }
 
 /**
@@ -498,6 +503,8 @@ $(function () {
     var selectedBalls = []; // value of user's selected balls ex:[4, 17, 22, 29, 36, 45]
     var selectedStars = [];
 
+    var jsonDatas;
+
     window.executeOnchangeEventFlag = true;
 
     var countGames;
@@ -761,6 +768,15 @@ $(function () {
                 window.console.log(selectedStars);
                 /** retrives countGames before ajax process **/
                 countGames = $('#form_Nombre_de_tirages').val();
+
+                /** preparation before sending **/
+                jsonDatas = {
+                    'selectedBalls': selectedBalls,
+                    'selectedStars': selectedStars,
+                    'countGames': countGames
+                };
+
+
                 sendUNumbers(selectedBalls, selectedStars, countGames);
             }
         }

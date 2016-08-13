@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class LotoFrController extends Controller implements ISimulotteryController
 {
+
     use TraitSimulottery;
 
     /**
@@ -23,14 +24,11 @@ class LotoFrController extends Controller implements ISimulotteryController
      *
      * @return JsonResponse for ajax request     *
      */
-    public function mainPlayAction()
+    public function mainPlayAction(Request $request)
     {
-        //Retrieve $countGames and uNemrs value from Request Object !
-        $request = Request::createFromGlobals();
-
-        $uNumbers = $request->request->get('uNumbers');
-        $uChance = $request->request->get('uChance');
-        $countGames = $request->request->get('countGames');
+        $uNumbers = $request->get('uNumbers'); //return null
+        $uChance = $request->get('uChance'); //return null
+        $countGames = $request->get('countGames');
 
         $validation = $this->isContentValidAction($uNumbers, $uChance, $countGames);
 
@@ -106,10 +104,11 @@ class LotoFrController extends Controller implements ISimulotteryController
                 "success" => true,
                 'score' => $ltfr->getScore(),
                 'arrSimulationDetails' => $arrSimulationDetails,
+                'message' => $validation['message']
             ];
         }
 
-        return new JsonResponse($response);
+        return $this->json($response);
     }
 
     /**
@@ -254,9 +253,9 @@ class LotoFrController extends Controller implements ISimulotteryController
             $validation['message'] = 'Vous devez selectionner minimum 1 numéros chance et maximum 1';
             return $validation;
         }
-        
-        /** at this point datas are valids **/
-        /** test if uBalls and uStars respect grid "multiple" patterns **/
+
+        /** at this point datas are valids * */
+        /** test if uBalls and uStars respect grid "multiple" patterns * */
         $ballsLength = count($arrUNumbers);
         $chanceLength = count($arrUChance);
 
@@ -287,15 +286,18 @@ class LotoFrController extends Controller implements ISimulotteryController
             {
                 $validation['patternMultiple'] = true;
             }
-        } 
-        if($validation['patternMultiple'] !== true){
+        }
+        if ($validation['patternMultiple'] !== true)
+        {
             $validation['message'] = 'Vous devez entrer une grille multiple avec un nombre de numéros et d\'étoiles valides';
             $validation['patternMultiple'] = false;
             $validation['isValide'] = false;
-        } else{
+        } else
+        {
             $validation['isValide'] = true;
         }
 
         return $validation;
     }
+
 }

@@ -9,53 +9,59 @@ function sendUNumbers(uNumbers, uChance, countGames) {
     /** creating ajax request **/
     var url = Routing.generate('execute_lotoFr_simulation');
 
-    $.post(
-            url,
-            {uNumbers: uNumbers, uChance: uChance, countGames: countGames},
-            function (response) {
-                if (response.code == 100 && response.success) {
-                    window.console.log(response);
-                    if (response.validation.message == "none") {
-                        var score = response.score;
-                        var simulationDetails = response.arrSimulationDetails;
-                        var countGames = response.countGames;
+    $.ajax({
+        url: url,
+        dataType: "json",
+        type: "POST",
+        data: {
+            'uNumbers': uNumbers,
+            'uChance': uChance,
+            'countGames': countGames
+        },
+        success: function (response) {
+            window.console.log(response);
+            if (response.message == "none") {
+                var score = response.score;
+                var simulationDetails = response.arrSimulationDetails;
+                var countGames = response.countGames;
 
-                        /**  build HtmlTable score  **/
-                        var $htmlTable = buildHtmlTable(score);
+                /**  build HtmlTable score  **/
+                var $htmlTable = buildHtmlTable(score);
 
-                        /** empty previous content  **/
-                        $('#score, #scoreDetails, #details').empty();
-                        $('#p_details').remove();
+                /** empty previous content  **/
+                $('#score, #scoreDetails, #details').empty();
+                $('#p_details').remove();
 
-                        $('#score').append($htmlTable);
+                $('#score').append($htmlTable);
 
-                        /**  build Html Table details simulation   **/
-                        //TODO attach it to the dom: create <div> after div#score
-                        var $htmlTableDetails = buildSimulationDetails(simulationDetails, countGames);
+                /**  build Html Table details simulation   **/
+                //TODO attach it to the dom: create <div> after div#score
+                var $htmlTableDetails = buildSimulationDetails(simulationDetails, countGames);
 
-                        $('#scoreDetails').append('<button id="p_details" class="btn btn-primary">Afficher les tirages</button>');
-                        $('#p_details').on({
-                            click: function () {
-                                $('#details').slideToggle('normal', 'linear', function () {
-                                    $(this).append($htmlTableDetails);
-                                });
-                            }
-                        })
-                    } else {
-                        /** creating div alert error  **/
-
-                        if ($('.customAlert')) {
-                            $('.customAlert').remove();
-                        }
-                        var $div = $("<div>");
-                        $div.addClass('alert alert-danger customAlert').html('<strong>' + response.message + '<strong>');
-                        /** add div alert error to the dom **/
-                        $('#details').append($div);
+                $('#scoreDetails').append('<button id="p_details" class="btn btn-primary">Afficher les tirages</button>');
+                $('#p_details').on({
+                    click: function () {
+                        $('#details').slideToggle('normal', 'linear', function () {
+                            $(this).append($htmlTableDetails);
+                        });
                     }
-                }
+                })
+            } else {
+                /** creating div alert error  **/
 
-            }, 'json');
+                if ($('.customAlert')) {
+                    $('.customAlert').remove();
+                }
+                var $div = $("<div>");
+                $div.addClass('alert alert-danger customAlert').html('<strong>' + response.message + '<strong>');
+                /** add div alert error to the dom **/
+                $('#details').append($div);
+            }
+        }
+    });
+
 }
+
 
 /**
  * disable all unchecked balls

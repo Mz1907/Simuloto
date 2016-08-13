@@ -20,13 +20,10 @@ class LottoController extends Controller implements ISimulotteryController
      * 
      * @return JsonResponse for ajax request     * 
      */
-    public function mainPlayAction()
+    public function mainPlayAction(Request $request)
     {
-        //Retrieve $countGames and uNemrs value from Request Object ! 
-        $request = Request::createFromGlobals();
-
-        $uNumbers = $request->request->get('uNumbers');
-        $countGames = $request->request->get('countGames');
+        $uNumbers = $request->get('uNumbers'); //return null
+        $countGames = $request->get('countGames');
 
         $validation = $this->isContentValidAction($uNumbers, $countGames);
 

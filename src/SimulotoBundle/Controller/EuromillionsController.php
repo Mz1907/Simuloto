@@ -8,6 +8,8 @@ use SimulotoBundle\Util\ISimulotteryController;
 use SimulotoBundle\Util\TraitSimulottery;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 /**
  * Description of EuromillionsController
  *
@@ -23,93 +25,101 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
      *
      * @return JsonResponse for ajax request     *
      */
-    public function mainPlayAction()
+    public function mainPlayAction(Request $request)
     {
-        //Retrieve $countGames and uNemrs value from Request Object !
-        $request = Request::createFromGlobals();
 
-        $uNumbers = $request->request->get('uNumbers');
-        $uStars = $request->request->get('uStars');
-        $countGames = $request->request->get('countGames');
-
-        $validation = $this->isContentValidAction($uNumbers, $uStars, $countGames);
-
-        $isValid = $validation['isValide'];
-
-        $response = [
-            'uNumbers' => $uNumbers,
-            'uStars' => $uStars,
-            'countGames' => $countGames,
-            'code' => 100,
-            'success' => true,
-            'isValid' => $isValid,
-            'message' => $validation['message']
-        ];
-
-        if ($isValid)
+        if ($request->isXmlHttpRequest())
         {
+            
+            $uNumbers = $request->get('selectedBalls'); //return null
+            $uStars = $request->get('selectedStars'); //return null
+            $countGames = $request->get('countGames');           
+            
+            $response = [
+                'message' => 'none',
+                'uNumbers' => $uNumbers,
+                'uStars' => $uStars,
+                'countGames' => $countGames,
+                'success' => true,
+                "status" => 100
+            ];
 
-            $eur = new EuromillionsSimulation();
+            $validation = $this->isContentValidAction($uNumbers, $uStars, $countGames);
 
-            //good balls for html table "show all draw"
-            $arrSimulationDetails = [
-                'draw' => [],
-                'drawStars' => [],
-                'uNumbers' => [],
-                'uStars' => [],
-                'goodBalls' => [],
-                'goodStars' => [],
+            $isValid = $validation['isValide'];
+
+            $response = [
+                'isValid' => $isValid,
                 'message' => $validation['message']
             ];
 
-            //hydrate EuromillionsSimulation
-            $eur->setUNumbers($uNumbers);
-            $eur->setUStars($uStars);
-            $eur->setCountGames($countGames);
-
-            /** calcul result of the simulation (controller is using trait methods) * */
-            for ($i = 0; $i < $countGames; $i++)
+            if ($isValid)
             {
+                $eur = new EuromillionsSimulation();
 
-                $draw = $this->drawBalls($eur->getMinNb(), $eur->getMaxNb(), $eur->getCountDraw());
-                $drawStars = $this->drawBalls($eur->getMinStars(), $eur->getMaxStars(), $eur->getCountDrawStars());
+                //good balls for html table "show all draw"
+                $arrSimulationDetails = [
+                    'draw' => [],
+                    'drawStars' => [],
+                    'uNumbers' => [],
+                    'uStars' => [],
+                    'goodBalls' => [],
+                    'goodStars' => [],
+                    'message' => $validation['message']
+                ];
 
-                $eur->setDraw($draw);
-                $eur->setDrawStars($drawStars);
+                //hydrate EuromillionsSimulation
+                $eur->setUNumbers($uNumbers);
+                $eur->setUStars($uStars);
+                $eur->setCountGames($countGames);
 
-                $countUserGrids = count($uNumbers);
+                /** calcul result of the simulation (controller is using trait methods) * */
+                for ($i = 0; $i < $countGames; $i++)
+                {
 
-                $goodBalls = $this->goodBalls($uNumbers, $eur->getDraw());
-                $eur->setGoodBalls($goodBalls);
+                    $draw = $this->drawBalls($eur->getMinNb(), $eur->getMaxNb(), $eur->getCountDraw());
+                    $drawStars = $this->drawBalls($eur->getMinStars(), $eur->getMaxStars(), $eur->getCountDrawStars());
 
-                $goodStars = $this->goodBalls($uStars, $eur->getDrawStars());
-                $eur->setGoodStars($goodStars);
+                    $eur->setDraw($draw);
+                    $eur->setDrawStars($drawStars);
 
-                $score = $this->buildScoreAction($eur);
+                    $countUserGrids = count($uNumbers);
 
-                $eur->setScore($score);
+                    $goodBalls = $this->goodBalls($uNumbers, $eur->getDraw());
+                    $eur->setGoodBalls($goodBalls);
 
-                array_push($arrSimulationDetails['draw'], $eur->getDraw());
-                array_push($arrSimulationDetails['drawStars'], $eur->getDrawStars());
-                array_push($arrSimulationDetails['uNumbers'], $eur->getUNumbers());
-                array_push($arrSimulationDetails['uStars'], $eur->getUStars());
-                array_push($arrSimulationDetails['goodBalls'], $goodBalls['goodBallsList']);
-                array_push($arrSimulationDetails['goodStars'], $goodStars['goodBallsList']);
+                    $goodStars = $this->goodBalls($uStars, $eur->getDrawStars());
+                    $eur->setGoodStars($goodStars);
+
+                    $score = $this->buildScoreAction($eur);
+
+                    $eur->setScore($score);
+
+                    array_push($arrSimulationDetails['draw'], $eur->getDraw());
+                    array_push($arrSimulationDetails['drawStars'], $eur->getDrawStars());
+                    array_push($arrSimulationDetails['uNumbers'], $eur->getUNumbers());
+                    array_push($arrSimulationDetails['uStars'], $eur->getUStars());
+                    array_push($arrSimulationDetails['goodBalls'], $goodBalls['goodBallsList']);
+                    array_push($arrSimulationDetails['goodStars'], $goodStars['goodBallsList']);
+                }
+                $response = [
+                    "validation" => $validation,
+                    "uNumbers" => $uNumbers,
+                    "uStars" => $uStars,
+                    "countGames" => $countGames,
+                    "code" => 100,
+                    "success" => true,
+                    'score' => $eur->getScore(),
+                    'arrSimulationDetails' => $arrSimulationDetails
+                ];
             }
-
-            $response = [
-                "validation" => $validation,
-                "uNumbers" => $uNumbers,
-                "uStars" => $uStars,
-                "countGames" => $countGames,
-                "code" => 100,
-                "success" => true,
-                'score' => $eur->getScore(),
-                'arrSimulationDetails' => $arrSimulationDetails,
-            ];
+        } else if (!$request->isXmlHttpRequest())
+        {
+            //not an xhmlttprequest
+            $response['message'] = 'Demande impossible pour le moment';
+            return $this->json($response);
         }
-
-        return new JsonResponse($response);
+        return $this->json($response);
     }
 
     /**
@@ -185,19 +195,18 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
      * * */
     public function isContentValidAction(array $arrUNumbers, array $arrUStars, $countGames)
     {
-        /** 
+        /**
          * 1. Testing countGames 
          * 2. Testing $arrNumbers
          * 3. Testing $arrUStars
          * 4. Testing pattern grid multiple (is this simulation a legal multiple pattern ?)
          */
-
         $validation = [
             'isValide' => false,
             'message' => 'none'
         ];
-        
-        
+
+
         if (is_numeric($countGames) && $countGames > 0)
         {
             if ($countGames !== "1" && $countGames !== "10" && $countGames !== "100" && $countGames !== "1000")
@@ -275,9 +284,9 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
             $validation['message'] = 'Vous devez selectionner minimum 1 &eacute;toile et maximum 11 &eacute;toiles. Error 8';
             return $validation;
         }
-        
-        /** at this point datas are valids **/
-        /** test if uBalls and uStars respect grid "multiple" patterns **/
+
+        /** at this point datas are valids * */
+        /** test if uBalls and uStars respect grid "multiple" patterns * */
         $ballsLength = count($arrUNumbers);
         $starsLength = count($arrUStars);
 
@@ -308,15 +317,17 @@ class EuromillionsController extends Controller implements ISimulotteryControlle
             {
                 $validation['patternMultiple'] = true;
             }
-        } 
-        if($validation['patternMultiple'] !== true){
+        }
+        if ($validation['patternMultiple'] !== true)
+        {
             $validation['message'] = 'Vous devez entrer une grille multiple avec un nombre de numéros et d\'étoiles valides';
             $validation['patternMultiple'] = false;
             $validation['isValide'] = false;
-        } else{
+        } else
+        {
             $validation['isValide'] = true;
         }
-        
+
         return $validation;
     }
 
